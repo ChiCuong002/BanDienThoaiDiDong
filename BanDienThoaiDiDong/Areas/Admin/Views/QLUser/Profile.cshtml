@@ -1,0 +1,51 @@
+﻿@model BanDienThoaiDiDong.Models.AdminUser
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_LayoutTangChu.cshtml";
+}
+
+<h2>Profile</h2>
+
+<div>
+    <h4>AdminUser</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Session["Email"]
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Role.TenRole)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Role.TenRole)
+        </dd>
+
+    </dl>
+</div>
+<p>
+     
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,226 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    width: 100%;
+    height: 50vh;
+    background-color: #333333;
+    display: flex;
+    flex: wrap;
+}
+.addtocart{
+    
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #008CBA;
+}
+.img_product img{
+    height: 92px;
+    margin: 10px 0px;
+    display: block;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: 0.4s;
+}
+.img_product img:hover{
+    opacity: 1;
+}
+.thumbmail_slide {
+  
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+}
+.img_product{
+    float: left;
+}
+.img_container{
+    float: right;
+}
+.img_container img{
+    height: 500px;
+    margin: 10px;
+}
+.tieu_de{
+    position: absolute;
+    left: 55%;
+    top: 10%;
+    color: white;
+    font-size: 22px;
+}
+.khuyen_mai{
+    position: absolute;
+    left: 55%;
+    top: 20%;
+    font-size: 18px;
+    color: white;
+}
+.gia_product{
+    position: absolute;
+    left: 55%;
+    top: 25%;
+    font-size: 20px;
+    color: white;
+}
+.mo_ta {
+    position: absolute;
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+    left: 55%;
+    top: 35%;
+    border-radius: 20px;
+  }
+  .thong_tin{
+    color: white;
+    font-size: 20px;
+    text-align: center;
+  }
+  .text_mota{
+    color: white;
+    font-size: 18px;
+   }
+.add_to_cart{
+    position: absolute;
+    left: 55%;
+    top: 85%;
+}
+@media(max-width: 1240px){
+    .san_pham_tieu_bieu{
+        height: 100%;
+    }
+}
+@media(max-width: 800px){
+    .tieu_de{
+        position: absolute;
+        left: 23%;
+    }
+     
+    .text_mota{
+        top: 100%;
+    }
+    .img_container{
+        
+        display: flex;
+        justify-content: center;
+    }
+  
+ 
+}
+.img_product{
+    position: absolute;
+    top: 100%;
+    display: flex;
+    flex-direction: row;
+    padding-left: 50px;
+}
+.san_pham_tieu_bieu{
+    width: 100%;
+    height: 700px;
+    margin-top: 800px;
+    display: flex;
+    flex-wrap: wrap;
+  
+}
+body{
+     
+    height: 100vh;
+     
+}
+
+
+@media(max-width: 450px){
+    .tieu_de{
+        position: absolute;
+        left: 10%;
+    }
+    .img_container{
+      padding-left: 200px;
+    }
+    .img_product{
+        position: absolute;
+        top: 100%;
+        display: flex;
+        flex-direction: row;
+        padding-left: 230px;
+    }
+    .khuyen_mai{
+
+        position: absolute;
+        top: 0%;
+        left: 10%;
+        margin-top: 670px;
+         
+    }
+    .gia_product{
+        position: absolute;
+        left: 10%;
+        top: 0%;
+        font-size: 20px;
+        margin-top: 720px;
+    }
+    .mo_ta {
+         
+        position: absolute;
+        top: 0;
+        left: 22px;
+        margin-top: 850px;
+        height: 200px;
+        width: 400px;
+    }
+    .addtocart{
+        margin-top: 135px;
+        margin-right: 30px;
+    }
+    .san_pham_tieu_bieu{
+        padding-top: 80%;
+        padding-right: 20%;
+     }
+}
+.san_pham_tieu_bieu{
+    width: 100%;
+    height: 400px; 
+    padding-left: 100px;  
+    margin-top: 800px;
+    display: flex;
+    flex-direction: row;
+
+}
+.sp_tieubieu_1{
+    margin: 30px;
+}
+.sp_tieubieu_2{
+    margin: 30px;
+}
+.sp_tieubieu_3{
+    margin: 30px;
+}
+.sp_tieubieu_4{
+    margin: 30px;
+}
+.sp_tieubieu_1 p{
+    text-align: center;
+}
+.sp_tieubieu_2 p{
+    text-align: center;
+}
+.sp_tieubieu_3 p{
+    text-align: center;
+}
+.sp_tieubieu_4 p{
+    text-align: center;
+}
+ 
+  
+ 

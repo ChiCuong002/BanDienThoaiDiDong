@@ -1,0 +1,46 @@
+﻿@model BanDienThoaiDiDong.Models.SANPHAM
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutTangChu.cshtml";
+}
+
+<link href="~/Content/chitietsanpham.css" rel="stylesheet" />
+<div class="center_page" style="background-color: #535353;">
+    <aside id="slide_detail">
+        <div class="img_detail">
+            <div class="thumbmail_slide">
+                <div class="img_container">
+                    <img src="@Model.Hinh" alt="" id="img_box" style="height: 400px;">
+                </div>
+            </div>
+            <div class="tieu_de">
+                <h1>@Model.TenSP</h1>
+            </div>
+            <div class="khuyen_mai">
+                <p>Giá khuyến mãi tại: Hồ Chí Minh</p>
+            </div>
+            <div class="gia_product">
+                <h1>@Model.GiaMacDinh(Model.MaSP) &#8363;</h1>
+
+            </div>
+            <div class="mo_ta" style="background-color:#2F3033;">
+                <div class="thong_tin">
+                    <p>Thông tin chi tiết</p>
+
+                </div>
+                <div class="text_mota">
+                    <p>@Model.MoTa</p>
+                </div>
+            </div>
+            <div class="add_to_cart">
+                <button class="addtocart">Thêm vào giỏ hàng</button>
+            </div>
+        </div>
+    </aside>
+</div>
+<div class="san_pham_tieu_bieu">
+
+</div>
+
+
+
