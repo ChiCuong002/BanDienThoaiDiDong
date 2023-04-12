@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e549dec153814ff287e5917ded42428d" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_DiDongModel.AdminUser" Width="1.5" PointX="11" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.Capacity" Width="1.5" PointX="6" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.CHITIETHDBAN" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.ChiTietSP" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.Color" Width="1.5" PointX="6" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.HDBAN" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.KHACHHANG" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.LOAISANPHAM" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.NhanVien" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.Role" Width="1.5" PointX="8.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.SANPHAM" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="DB_DiDongModel.FK_AdminUser_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_Capacity_SP" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_CHITIETHDBAN_HDBAN" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_CHITIETHDBAN_SANPHAM" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_ChiTietSP_SP" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_Color_SP" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_HDBAN_KHACHHANG" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_SANPHAM_LOAISANPHAM" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

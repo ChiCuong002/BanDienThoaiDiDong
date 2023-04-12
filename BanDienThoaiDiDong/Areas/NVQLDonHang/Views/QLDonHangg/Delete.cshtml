@@ -1,0 +1,88 @@
+﻿@model BanDienThoaiDiDong.Models.HDBAN
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/NVQLDonHang/Views/Shared/_LayoutTrangChu.cshtml";
+}
+
+<div style="margin: 10px auto; width: 70%;">
+    <h3 style="text-align: center">XÓA ĐƠN HÀNG</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Ngày đặt hàng
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NgayDatHang)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DiaChiGiaoHang)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DiaChiGiaoHang)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TongGiaTri)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TongGiaTri)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TrangThaiTT)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TrangThaiTT)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TrangThaiDH)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TrangThaiDH)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.New)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.New)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.HienThi)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.HienThi)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.KHACHHANG.HoTen)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.KHACHHANG.HoTen)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.MaHD)
+            <div class="form-actions no-color">
+                <input type="submit" value="XÓA" class="btn btn-danger" /> |
+                @Html.ActionLink("TRỞ LẠI", "DSDonHang")
+            </div>
+        }
+    </div>
+</div>

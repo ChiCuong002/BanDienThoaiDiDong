@@ -1,0 +1,90 @@
+﻿@model BanDienThoaiDiDong.Models.HDBAN
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/NVQLDonHang/Views/Shared/_LayoutTrangChu.cshtml";
+}
+
+<div style="margin: 10px auto; width: 70%;">
+    <h2 style="text-align: center">CẬP NHẬT TRẠNG THÁI ĐƠN HÀNG</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MaHD)
+
+            <div class="form-group">
+                Ngày đặt hàng
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NgayDatHang, new { htmlAttributes = new { @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.NgayDatHang, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                Mã đơn hàng
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MaHD, new { htmlAttributes = new { @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.MaHD, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                Mã khách hàng
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MaKH, new { htmlAttributes = new { @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.MaKH, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                Địa chỉ giao hàng
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DiaChiGiaoHang, new { htmlAttributes = new { @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.DiaChiGiaoHang, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                Tổng tiền
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TongGiaTri, new { htmlAttributes = new { @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.TongGiaTri, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                Trạng thái thanh toán
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TrangThaiTT, new { htmlAttributes = new { @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.TrangThaiTT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                Trạng thái đơn hàng
+                <div class="col-md-10">
+                    @*@Html.EditorFor(model => model.TrangThaiDH, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @*@Html.ValidationMessageFor(model => model.TrangThaiDH, "", new { @class = "text-danger" })*@
+                    <select name="ttdh">
+                        <option value="0">Đang giao hàng</option>
+                        <option value="1">Đã giao hàng</option>
+                    </select>
+                </div>
+            </div>
+            <p></p>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="LƯU" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("TRỞ LẠI", "DSDonHang")
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<BanDienThoaiDiDong.Models.HDBAN>
+@{
+    ViewBag.Title = "DSDonHang";
+    Layout = "~/Areas/NVQLDonHang/Views/Shared/_LayoutTrangChu.cshtml";
+}
+
+<div style="margin: 20px auto; width: 70%;">
+    <div>
+        <h2 style="text-align: center">DANH SÁCH ĐƠN ĐẶT HÀNG</h2>
+    </div>
+
+    <div style="text-align: center">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
+                @Html.TextBox("Searching", "", new { @class = "form-control" })
+                <input type="submit" class="btn btn-warning" value="Search" />
+            </div>
+        }
+    </div>
+
+    <div>
+        <p>
+
+        </p>
+    </div>
+
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã đơn hàng</th>
+                    <th>Tên khách hàng</th>
+                    <th>Số điện thoại</th>
+                    <th>Tiền</th>
+                    <th>Thanh toán</th>
+                    <th>Ngày tạo</th>
+                    <th>Hiển thị</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    var i = 0;
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(i+1)</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaHD)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.KHACHHANG.HoTen)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.KHACHHANG.SoDienThoai)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TongGiaTri)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TrangThaiTT)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NgayDatHang)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HienThi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TrangThaiDH)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Chi tiết", "Details", new { id = item.MaHD }, new { @class = "btn btn-success" })
+                                @Html.ActionLink("Cập nhật", "Edit", new { id = item.MaHD }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Xóa", "Delete", new { id = item.MaHD }, new { @class = "btn btn-danger" })
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

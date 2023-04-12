@@ -1,0 +1,99 @@
+﻿@model IEnumerable<BanDienThoaiDiDong.Models.CHITIETHDBAN>
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/NVQLDonHang/Views/Shared/_LayoutTrangChu.cshtml";
+}
+
+<div class="card" style="margin: 20px auto; width: 70%;">
+    <div class="card-header">
+        <h2 style="text-align:center">CHI TIẾT ĐƠN HÀNG</h2>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Họ tên khách hàng</label>
+                    <p class="form-control">@ViewBag.hoten</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Mã đơn hàng</label>
+                    <p class="form-control">@ViewBag.mahd</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <p class="form-control">@ViewBag.dienthoai</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <p class="form-control">@ViewBag.email</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Địa chỉ giao hàng</label>
+                    <p class="form-control">@ViewBag.diachi</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Ngày tạo</label>
+                    <p class="form-control">@ViewBag.ngaytao</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <p class="form-control">@ViewBag.trangthaidh</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Tổng tiền</label>
+                    <p class="form-control">@ViewBag.tien</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h2>Danh sách sản phẩm</h2>
+                </div>
+                <div class="col-12">
+                    <table class="table table-bordered">
+                        <thead>
+                        <th>Hình sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="@item.SANPHAM.Hinh" width="100" height="100" />
+                                    </td>
+                                    <td>@item.SANPHAM.TenSP</td>
+                                    <td>@item.DonGia</td>
+                                    <td>@item.SoLuongDatHang</td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="margin: 20px auto; width:70%;">
+    @Html.ActionLink("TRỞ LẠI", "DSDonHang")
+</div>
