@@ -1,0 +1,239 @@
+﻿
+.brand {
+    text-align: center;
+    color: white;
+}
+
+.image-content, .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 8px;
+}
+
+.card {
+    border-radius: 25px;
+    background-color: #323232;
+}
+
+.card-image {
+    position: relative;
+    height: 150px;
+    width: 150px;
+}
+
+    .card-image .card-img {
+        height: 100%;
+        width: 100%;
+    }
+
+.name {
+    font-size: 22px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.price {
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+}
+
+.slide-content {
+    margin: 0 40px;
+    overflow: hidden;
+    border-radius: 25px;
+}
+
+.slide-container {
+    width: 100%;
+    padding: 40px 0;
+}
+
+.swiper-navBtn {
+    color: white;
+    transition: color 0.3 ease;
+}
+
+    .swiper-navBtn:hover {
+        color: gray;
+    }
+
+    .swiper-navBtn::before,
+    .swiper-navBtn::after {
+        font-size: 40px;
+    }
+
+.swiper-button-next {
+    right: 0;
+}
+
+.swiper-button-prev {
+    left: 0;
+}
+
+.card:hover {
+    box-shadow: -4px -4px 8px rgba(134,134,134,.2), 4px 4px 8px rgba(28,28,28,.4);
+}
+/*slide show trang chu*/
+.slider {
+    position: relative;
+    width: 100%;
+}
+
+.myslide {
+    display: none;
+    overflow: hidden;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translate(0,-50%);
+    font-size: 50px;
+    padding: 15px;
+    cursor: pointer;
+    color: white;
+    user-select: none;
+    transition: 0.1s;
+    text-decoration: none;
+}
+
+    .prev:hover, .next:hover {
+        color: #3498db;
+    }
+
+.next {
+    right: 0;
+}
+
+.html {
+    scroll-behavior: smooth
+}
+/*CSS gio hang*/
+.product-item {
+    display: flex;
+    flex-direction: row;
+    padding: 12px;
+}
+
+.product {
+    display: block;
+    padding: 10px 12px;
+    width: 50%;
+    border-radius: 12px;
+    box-shadow: 0 24px 80px rgba(0,0,0,.07), 0 10.0266px 33.4221px rgba(0,0,0,.0503198), 0 5.36071px 17.869px rgba(0,0,0,.0417275), 0 3.00517px 10.0172px rgba(0,0,0,.035), 0 1.59602px 5.32008px rgba(0,0,0,.0282725), 0 0.664142px 2.21381px rgba(0,0,0,.01);
+    margin: 40px auto;
+}
+
+.name-price {
+    display: block;
+}
+
+.left {
+    width: 25%;
+    text-align: center;
+}
+
+.right {
+    width: 75%;
+}
+
+.money {
+    float: right;
+    margin-right: 12px;
+}
+
+.submitorder {
+    display: block;
+    background: #0071e3;
+    border-radius: 12px;
+    width: 100%;
+    border: 0;
+    margin: 10px auto;
+    height: 50px;
+    color: white;
+    font-size: 15px;
+}
+
+#myform {
+    text-align: right;
+    padding: 5px;
+    margin: 2%;
+}
+
+.qty {
+    width: 40px;
+    height: 25px;
+    text-align: center;
+}
+
+input.qtyplus {
+    width: 25px;
+    height: 25px;
+}
+
+input.qtyminus {
+    width: 25px;
+    height: 25px;
+}
+/*Giao di?n ph??ng th?c thanh toán*/
+.radio-input input {
+    display: none;
+}
+
+.radio-input {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: #fff;
+    color: #000;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.info {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.question {
+    color: rgb(49, 49, 49);
+    font-size: 1rem;
+    line-height: 1rem;
+    font-weight: 800;
+}
+
+
+
+.radio-input label {
+    display: flex;
+    background-color: #fff;
+    padding: 14px;
+    margin: 8px 0 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid rgba(187, 187, 187, 0.164);
+    color: #000;
+    transition: .3s ease;
+    align-items: center;
+}
+
+    .radio-input label:hover {
+        background-color: rgba(24, 24, 24, 0.13);
+        border: 1px solid #bbb;
+    }
+
+.radio-input input:checked + label {
+    border-color: rgb(41, 121, 255);
+    color: rgb(41, 121, 255);
+}
+
+
+
+body {
+}

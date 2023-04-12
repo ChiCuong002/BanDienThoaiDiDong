@@ -1,0 +1,129 @@
+﻿@model BanDienThoaiDiDong.Models.Cart
+@{
+    ViewBag.Title = "ShowCart";
+    //Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
+    //decimal total = ViewBag.TongTien;
+}
+<link rel="stylesheet" href="~/Content/style.css">
+<script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
+@if (Model != null)
+{
+    <!---->
+    <div class="product">
+        <div class="info">
+            <span class="question">Giỏ hàng của bạn</span>
+        </div>
+        @foreach (var (item, index) in Model.Items.Select((item, index) => (item, index)))
+        {
+            <div class="product-item">
+                <div class="left">
+                    <div>
+                        <img width="100" src="@item.product.Hinh">
+                    </div>
+                    <div>
+                        <a class="btn" href="/ShoppingCart/RemoveCart/@index">
+                            Xóa
+                        </a>
+                    </div>
+                </div>
+                <div class="name-price right">
+                    <div>
+                        <p> @item.product.TenSP </p>
+                    </div>
+                    <div>
+                        <aside>
+                            <div>
+                                <label style="font-weight: bold;">Dung lượng: @item.capacity.DungLuong</label>
+                            </div>
+                        </aside>
+                    </div>
+                    <div>
+                        <aside>
+                            <div>
+                                <label style="font-weight: bold;">Màu: @item.color.TenColor</label>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+                <div>
+                    <p class="money_format" style="color:black">
+                        @Model.Total_money_SP(index).ToString("N0")đ
+                    </p>
+                </div>
+            </div>
+            <div>
+                <form id='myform' method='POST' class='quantity' action='#' data-form-id="@index">
+                    <input type="hidden" value="@index" id="idPro" />@*@item.product.MaSP*@
+                    <input type='button' value='-' class='qtyminus minus' field='quantity' />
+                    <input type='text' name='quant' value='@item.quantity' class='qty' />
+                    <input type='button' value='+' class='qtyplus plus' field='quantity' />
+                </form>
+            </div>
+        }
+        @if (Model != null)
+        {
+            <div>
+                <label style="font-weight: bold;">Tổng tiền:</label>
+                <p class="money money_format">@Model.Total_money().ToString("N0")đ</p>
+            </div>
+            <form method="post" action="@Url.Action("PayMethod","ShoppingCart")">
+                <div class="radio-input">
+                    <div class="info">
+                        <span class="question">Chọn phương thức thanh toán</span>
+                    </div>
+                    <input type="radio" id="value-1" name="PaymentMethod" value="1" checked>
+                    <label for="value-1">Thanh toán khi nhận hàng </label>
+
+                    <input type="radio" id="value-2" name="PaymentMethod" value="2">
+                    <label for="value-2">Thanh toán VNPAY <img src="https://kt.city/static/card-vnpay.png" style="object-fit:cover;width:125px;margin-left:20px" /></label>
+                    <input type="radio" id="value-3" name="PaymentMethod" value="3">
+                    <label for="value-3">Thanh toán PAYPAL <img src="https://www.paypalobjects.com/digitalassets/c/website/logo/full-text/pp_fc_hl.svg" style="object-fit:cover;width:125px;margin-left:20px" /></label>
+                </div>
+                <div>
+                    <input type="submit" class="submitorder" value="ĐẶT HÀNG" />
+                </div>
+            </form>
+        }
+    </div>
+    <!--Modal success-->
+    <div class="modal fade" id="myModal-Success">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Thông báo hệ thống</h3>
+                </div>
+                <div class="modal-body">
+                    <h4 class="modalcontent"></h4>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-default" data-dismiss="modal" onclick="CloseModalSuccess()">Đóng</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!--My modal success-->
+}
+<script src="~/Scripts/ScriptGioHang.js"></script>
+<script>
+     function Show() {
+        $("#myModal-Success").modal("show");
+    }
+    function CloseModalSuccess() {
+        $("#myModal-Success").modal("hide");
+    }
+    function OpenSuccessModal(strMesssage) {
+        document.getElementsByClassName("modalcontent")[0].innerHTML = strMesssage;
+        $("#myModal-Success").modal('show');
+    }
+    $(document).ready(function () {
+        $(".showmodal").click(function () {
+            Show();
+        })
+        var msg = "@ViewBag.Message";
+        if (msg)
+            OpenSuccessModal(msg);
+    });
+</script>
