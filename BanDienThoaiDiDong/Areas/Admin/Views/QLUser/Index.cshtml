@@ -12,17 +12,17 @@
         @if (Session["idUser"] != null)
         {
             <li class="active">
-                <a href="/Admin/QuanLyUser/Profile"> Xin chào: @Session["Email"] </a>
+                <a href="/Admin/QLUser/Profile"> Xin chào: @Session["Email"] </a>
 
             </li>
             <li class="active">
-                <a href="/Admin/QuanLyUser/DangXuat">Đăng xuất</a>
+                <a href="/Admin/QLUser/DangXuat">Đăng xuất</a>
             </li>
         }
         else
         {
-            <li class="active"><a href="/Admin/QuanLyUser/DangNhap">Đăng nhập</a></li>
-            <li class="active"> <a href="/Admin/QuanLyUser/DangKy">Đăng ký</a></li>
+            <li class="active"><a href="/Admin/QLUser/DangNhap">Đăng nhập</a></li>
+            <li class="active"> <a href="/Admin/QLUser/DangKy">Đăng ký</a></li>
         }
 
 
@@ -31,22 +31,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.HoTen)
+            HỌ VÀ TÊN KHÁCH HÀNG
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            EMAIL
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DiaChi)
+            ĐỊA CHỈ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SoDienThoai)
+            SỐ ĐIỆN THOẠI
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MatKhau)
+            MẬT KHẨU
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.HienThi)
+            HIỂN THỊ 
         </th>
         <th></th>
     </tr>
@@ -73,7 +73,7 @@
         </td>
         <td>
              
-            @Html.ActionLink("Xóa", "Delete", new { id=item.MaKH })
+            @Html.ActionLink("Xóa", "Delete", new { id=item.MaKH }, new {@class = "btn btn-danger"})
         </td>
     </tr>
 }

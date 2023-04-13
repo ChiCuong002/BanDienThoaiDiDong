@@ -13,7 +13,7 @@
                 Login
             </div>
             <div class="card-body">
-                @using (Html.BeginForm("DangNhap", "QuanLyUser", FormMethod.Post))
+                @using (Html.BeginForm("DangNhap", "QLUser", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">

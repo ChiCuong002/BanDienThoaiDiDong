@@ -1,7 +1,11 @@
-﻿@model BanDienThoaiDiDong.Models.DanhSachSPvaTH
+﻿@using PagedList.Mvc;
+@using BanDienThoaiDiDong.Models
+@model PagedList.PagedList<BanDienThoaiDiDong.Models.SANPHAM>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutTangChu.cshtml";
+    List<BanDienThoaiDiDong.Models.LOAISANPHAM> listHang = ViewBag.dsHang;
+
 }
 
 <script src="~/Content/js.js"></script>
@@ -32,7 +36,7 @@
     <div class="filter-cate">
         <div class="ft-cate">
             <a class="focus" href="">Tất cả</a>
-            @foreach (var item in Model.lstHang)
+            @foreach (var item in listHang)
             {
                 @Html.ActionLink(item.TenLoai, "SanPhamTheoThuongHieu", "DanhSachSanPham", new { @id = item.MaLoai }, null)
             }
@@ -61,7 +65,7 @@
         </div>
     </div>
     <div class="listing-cate">
-        @foreach (var item in Model.lstSanPham)
+        @foreach (var item in Model)
         {
             <div class="listing-cate-item">
                 <a href="">
@@ -81,10 +85,17 @@
             </div>
         }
 
-
-
-
     </div>
+    <br />
+    
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+    <style>
+        .MenuTrang li {
+            display: inline;
+        }
+    </style>
 </section>
 
 

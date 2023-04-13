@@ -1,4 +1,6 @@
-﻿@model IEnumerable<BanDienThoaiDiDong.Models.SANPHAM>
+﻿@using PagedList.Mvc
+@using BanDienThoaiDiDong.Models
+@model PagedList.PagedList<BanDienThoaiDiDong.Models.SANPHAM>
 @{
     ViewBag.Title = "SanPhamTheoThuongHieu";
     Layout = "~/Views/Shared/_LayoutTangChu.cshtml";
@@ -87,6 +89,16 @@
         }
 
     </div>
+    <br />
+
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
+    <style>
+        .MenuTrang li {
+            display: inline;
+        }
+    </style>
 </section>
 
 
