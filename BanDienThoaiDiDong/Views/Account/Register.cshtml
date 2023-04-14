@@ -1,0 +1,58 @@
+﻿@model BanDienThoaiDiDong.Models.KHACHHANG
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+    <link href="@Url.Content("~/Content/register.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("Register", "Register", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.HoTen)
+                @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.HoTen)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email)
+                @if (ViewBag.error != null)
+                {
+                    <span class="field-validation-error">@ViewBag.error</span>
+                }
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DiaChi)
+                @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.DiaChi)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.SoDienThoai)
+                @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.SoDienThoai)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MatKhau)
+                @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.MatKhau)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmMatKhau)
+                @Html.PasswordFor(m => m.ConfirmMatKhau, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ConfirmMatKhau)
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+        }
+
+    </div>
+</body>
+</html>
