@@ -1,4 +1,7 @@
-﻿@model IEnumerable<BanDienThoaiDiDong.Models.HDBAN>
+﻿@using BanDienThoaiDiDong.Models
+@using PagedList.Mvc
+@model PagedList.PagedList<HDBAN>
+
 @{
     ViewBag.Title = "DSDonHang";
     Layout = "~/Areas/NVQLDonHang/Views/Shared/_LayoutTrangChu.cshtml";
@@ -28,7 +31,7 @@
     <div>
         <table class="table table-bordered">
             <thead>
-                <tr>
+                <tr class="table-secondary">
                     <th>STT</th>
                     <th>Mã đơn hàng</th>
                     <th>Tên khách hàng</th>
@@ -86,4 +89,18 @@
             </tbody>
         </table>
     </div>
+
+    <br />
+    <div style="text-align: center">
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+        <div class="MenuTrang">
+            @Html.PagedListPager(Model, page => Url.Action("DSDonHang", new { page }))
+        </div>
+    </div>
+    <style>
+        .MenuTrang li {
+            display: inline;
+        }
+    </style>
 </div>

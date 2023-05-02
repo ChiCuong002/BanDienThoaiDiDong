@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BanDienThoaiDiDong.Models;
 using System.Net;
+using PagedList;
 
 namespace BanDienThoaiDiDong.Areas.NVQLDonHang.Controllers
 {
@@ -12,7 +13,7 @@ namespace BanDienThoaiDiDong.Areas.NVQLDonHang.Controllers
     {
         DB_DiDongEntities database = new DB_DiDongEntities();
         // GET: NVQLDonHang/QLDonHangg
-        public ActionResult DSDonHang(string Searching)
+        public ActionResult DSDonHang(string Searching, int? page)
         {
             var order = database.HDBANs.ToList();
             if (!string.IsNullOrEmpty(Searching))
@@ -23,7 +24,10 @@ namespace BanDienThoaiDiDong.Areas.NVQLDonHang.Controllers
             {
                 order = database.HDBANs.ToList();
             }
-            return View(order);
+
+            int pageSize = 10;
+            int pageNum = (page ?? 1);
+            return View(order.ToPagedList(pageNum, pageSize));
         }
 
         public ActionResult Details(int id)
