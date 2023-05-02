@@ -47,6 +47,7 @@ namespace BanDienThoaiDiDong.Controllers
             {
                 lstSanPham = database.SANPHAMs.ToList();
             }
+            ViewBag.dsHang = database.LOAISANPHAMs.ToList();
             return View(lstSanPham);
         }
     }

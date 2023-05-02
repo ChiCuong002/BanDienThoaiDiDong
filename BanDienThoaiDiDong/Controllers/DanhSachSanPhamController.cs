@@ -13,39 +13,25 @@ namespace BanDienThoaiDiDong.Controllers
     {
         DB_DiDongEntities database = new DB_DiDongEntities();
         // GET: DanhSachSanPham
-        public ActionResult Index(string sortOrder, string SearchString, int? page )
+        public ActionResult Index(string sortOrder, string SearchString, int? page, string currentFilter)
         {
-
-            //DanhSachSPvaTH objSanPham = new DanhSachSPvaTH();
-
-
-            //objSanPham.lstHang = database.LOAISANPHAMs.ToList();
-            ////sap xep
-            //ViewBag.SortTheoTen = String.IsNullOrEmpty(sortOrder) ? "ma_desc" : "";
-            //if (!string.IsNullOrEmpty(SearchString))
-            //{
-            //    objSanPham.lstSanPham = database.SANPHAMs.Where(n => n.TenSP.Contains(SearchString)).ToList();
-
-            //}
-            //else
-            //{
-            //    //lay san pham trong SANPHAM
-            //    objSanPham.lstSanPham = database.SANPHAMs.ToList();
-            //}
-            //switch (sortOrder)
-            //{
-            //    case "ma_desc":
-            //        objSanPham.lstSanPham = objSanPham.lstSanPham.OrderByDescending(s => s.TenSP).ToList();
-            //        break;
-            //    default:
-            //        objSanPham.lstSanPham = objSanPham.lstSanPham.OrderBy(s => s.TenSP).ToList();
-            //        break;
-            //}
-            int pageSize = 9;
-            int pageNum = (page ?? 1);
             var lstSanPham = database.SANPHAMs.ToList();
+            ViewBag.CurrentSort = sortOrder;
+             
             //sap xep 
             ViewBag.SortTheoTen = String.IsNullOrEmpty(sortOrder) ? "ma_desc" : "";
+            ViewBag.SortTheoGia = sortOrder == "price" ? "price_desc" : "price";
+
+            if (SearchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                SearchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = SearchString;
             if (!string.IsNullOrEmpty(SearchString))
             {
                 lstSanPham = database.SANPHAMs.Where(n => n.TenSP.Contains(SearchString)).ToList();
@@ -60,20 +46,37 @@ namespace BanDienThoaiDiDong.Controllers
                 case "ma_desc":
                     lstSanPham = lstSanPham.OrderByDescending(s => s.TenSP).ToList();
                     break;
+                case "price":
+                    lstSanPham = lstSanPham.OrderBy(s => s.Gia).ToList();
+                    break;
+                case "price_desc":
+                    lstSanPham = lstSanPham.OrderByDescending(s => s.Gia).ToList();
+                    break;
                 default:
                     lstSanPham = lstSanPham.OrderBy(s => s.TenSP).ToList();
                     break;
             }
             ViewBag.dsHang = database.LOAISANPHAMs.ToList();
-            return View(lstSanPham.ToPagedList(pageNum,pageSize));
-        }
-        public ActionResult SanPhamTheoThuongHieu(int id, string SearchString, string sortOrder, int? page)
-        {
             int pageSize = 9;
-            int pageNum = (page ?? 1);
+            int pageNumber = (page ?? 1);
+            return View(lstSanPham.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult SanPhamTheoThuongHieu(int id, string SearchString, string sortOrder, int? page, string currentFilter)
+        {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.SortTheoTen = String.IsNullOrEmpty(sortOrder) ? "ma_desc" : "";
-            ViewBag.TenSortParm = sortOrder == "ten" ? "ten_desc" : "ten";
-            var lstSanPham = database.SANPHAMs.Where(n => n.MaSP == id).ToList();
+            ViewBag.SortTheoGia = sortOrder == "price" ? "price_desc" : "price";
+            var lstSanPham = database.SANPHAMs.Where(n => n.MaLoai == id).ToList();
+            if (SearchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                SearchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = SearchString;
             if (!string.IsNullOrEmpty(SearchString))
             {
                 lstSanPham = database.SANPHAMs.Where(n => n.TenSP.Contains(SearchString)).ToList();
@@ -82,17 +85,25 @@ namespace BanDienThoaiDiDong.Controllers
             else
             {
                 //lay san pham trong SANPHAM
-                lstSanPham = database.SANPHAMs.Where(n => n.MaLoaiSP == id).ToList();
+                lstSanPham = database.SANPHAMs.Where(n => n.MaLoai == id).ToList();
             }
             switch (sortOrder)
             {
                 case "ma_desc":
                     lstSanPham = lstSanPham.OrderByDescending(s => s.TenSP).ToList();
                     break;
+                case "price":
+                    lstSanPham = lstSanPham.OrderBy(s => s.Gia).ToList();
+                    break;
+                case "price_desc":
+                    lstSanPham = lstSanPham.OrderByDescending(s => s.Gia).ToList();
+                    break;
                 default:
                     lstSanPham = lstSanPham.OrderBy(s => s.TenSP).ToList();
                     break;
             }
+            int pageSize = 9;
+            int pageNum = (page ?? 1);
             return View(lstSanPham.ToPagedList(pageNum,pageSize));
         }
     }

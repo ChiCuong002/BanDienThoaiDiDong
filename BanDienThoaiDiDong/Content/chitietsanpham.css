@@ -1,7 +1,6 @@
-﻿body {
-    background-color: #535353;
-}
-
+﻿ body{
+     background-color: white;
+ }
 .addtocart {
     border: none;
     color: white;
@@ -92,6 +91,7 @@
 .text_mota {
     color: white;
     font-size: 18px;
+    background-color: gainsboro;
 }
 
 .add_to_cart {
@@ -235,4 +235,7 @@ body {
 
 .sp_tieubieu_4 p {
     text-align: center;
+}
+.center_page{
+    background-color: white;
 }

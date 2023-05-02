@@ -12,10 +12,10 @@ namespace BanDienThoaiDiDong.Controllers
     {
         DB_DiDongEntities database = new DB_DiDongEntities();
         // GET: DetailProduct
-        public ActionResult Index(int id)
-        {
-            var objProduct = database.SANPHAMs.Where(n => n.MaSP == id).FirstOrDefault();
-            return View(objProduct);
-        }
+        //public ActionResult Index(int id)
+        //{
+        //    var objProduct = database.SANPHAMs.Where(n => n.MaSP == id).FirstOrDefault();
+        //    return View(objProduct);
+        //}
     }
 }

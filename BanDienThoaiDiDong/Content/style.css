@@ -172,7 +172,7 @@ input.qtyminus {
 
 .listing-cate-item {
     float: left;
-    background: #323232;
+    background: rgba(134,134,134,.2);
     border-radius: 24px;
     padding: 30px;
     margin: 0;

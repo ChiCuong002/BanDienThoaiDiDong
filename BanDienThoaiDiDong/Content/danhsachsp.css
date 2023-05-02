@@ -1,6 +1,6 @@
 ﻿/*danh sach san pham*/
 :root {
-    --bg-color: #3e3e3f;
+    --bg-color: none;
 }
 
 * {
@@ -11,7 +11,7 @@
 
 body {
     font: 14px/18px Helvetica Neue,Helvetica,Arial,SF Pro Display,sans-serif;
-    background-color: var(--bg-color);
+    background-color: #fff;
 }
 
 .fixed {
@@ -90,7 +90,7 @@ ul {
     }
 
 .active {
-    background-color: #2f3033;
+    background-color: white;
 }
 
 .menu li:hover {
@@ -173,6 +173,7 @@ section {
     justify-content: center;
     align-items: center;
     margin-bottom: 100px;
+    background-color: none;
 }
 
 .logo {
@@ -350,7 +351,7 @@ section {
 
 .listing-cate-item {
     float: left;
-    background: #323232;
+    background: gainsboro;
     border-radius: 24px;
     padding: 30px;
     margin: 0;

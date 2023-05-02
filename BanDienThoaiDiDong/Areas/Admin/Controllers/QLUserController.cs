@@ -38,16 +38,16 @@ namespace BanDienThoaiDiDong.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DangKy(AdminUser _user)
+        public ActionResult DangKy(NHANVIEN _user)
         {
             if (ModelState.IsValid)
             {
-                var check = database.AdminUsers.FirstOrDefault(s => s.Username == _user.Username);
+                var check = database.NHANVIENs.FirstOrDefault(s => s.UserName == _user.UserName);
                 if (check == null)
                 {
-                    _user.Password = GetMD5(_user.Password);
+                    _user.MatKhau = GetMD5(_user.MatKhau);
                     database.Configuration.ValidateOnSaveEnabled = false;
-                    database.AdminUsers.Add(_user);
+                    database.NHANVIENs.Add(_user);
                     database.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -79,19 +79,20 @@ namespace BanDienThoaiDiDong.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DangNhap(string username, string password)
+        public ActionResult DangNhap(string username, string matkhau)
         {
             if (ModelState.IsValid)
             {
 
-                var f_password = GetMD5(password);
-                var data = database.AdminUsers.Where(s => s.Username.Equals(username) && s.Password.Equals(f_password)).ToList();
+                var f_password = GetMD5(matkhau);
+                var data = database.NHANVIENs.Where(s => s.UserName.Equals(username) && s.MatKhau.Equals(f_password)).ToList();
                 if (data.Count() > 0)
                 {
                     //add session
 
-                    Session["Email"] = data.FirstOrDefault().Username;
-                    Session["idUser"] = data.FirstOrDefault().ID;
+                    Session["Email"] = data.FirstOrDefault().UserName;
+                    Session["Hoten"] = data.FirstOrDefault().HoTen;
+                    Session["emaill"] = data.FirstOrDefault().Email;
                     return RedirectToAction("Index");
                 }
                 else
@@ -108,11 +109,24 @@ namespace BanDienThoaiDiDong.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public ActionResult Profile(string username)
+        public ActionResult Profile()
         {
-            var objAdmin = database.AdminUsers.Where(n => n.Username == username).FirstOrDefault();
+            string user = Session["Email"].ToString();
+            var objAdmin = database.NHANVIENs.Where(n => n.UserName == user).FirstOrDefault();
             return View(objAdmin);
         }
-
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var objUser = database.NHANVIENs.Where(c => c.MaNV == id).FirstOrDefault();
+            return View(objUser);
+        }
+        [HttpPost]
+        public ActionResult Edit(int id, NHANVIEN nHANVIEN)
+        {
+            database.Entry(nHANVIEN).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

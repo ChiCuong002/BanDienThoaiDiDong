@@ -11,33 +11,29 @@ namespace BanDienThoaiDiDong.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
+    
     public partial class SANPHAM
     {
-        DB_DiDongEntities database = new DB_DiDongEntities();
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SANPHAM()
         {
+            this.ChiTietGHs = new HashSet<ChiTietGH>();
             this.CHITIETHDBANs = new HashSet<CHITIETHDBAN>();
-            this.ChiTietSPs = new HashSet<ChiTietSP>();
         }
     
-        public int MaSP { get; set; }
+        public string MaSP { get; set; }
         public string TenSP { get; set; }
-        public string MoTa { get; set; }
         public string Hinh { get; set; }
-        public Nullable<int> MaLoaiSP { get; set; }
+        public string MoTa { get; set; }
+        public Nullable<int> MaLoai { get; set; }
         public Nullable<bool> HienThi { get; set; }
+        public Nullable<int> SoLuong { get; set; }
+        public Nullable<decimal> Gia { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChiTietGH> ChiTietGHs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHITIETHDBAN> CHITIETHDBANs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietSP> ChiTietSPs { get; set; }
         public virtual LOAISANPHAM LOAISANPHAM { get; set; }
-        public decimal GiaMacDinh(int id)
-        {
-            return (decimal)database.ChiTietSPs.Where(n => n.MaSP == id).FirstOrDefault().Gia;
-        }
     }
 }

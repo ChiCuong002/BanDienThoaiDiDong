@@ -8,7 +8,7 @@
 
 <script src="~/Content/jsSlide.js"></script>
 <script src="~/Content/js.js"></script>
-<link href="~/Content/danhsachsp.css" rel="stylesheet" />
+<link href="~/Content/danhsachsanpham.css" rel="stylesheet" />
 <section>
     <img class="logo" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Category/42/WiPhone-120x35.png" alt="">
 
@@ -57,7 +57,7 @@
             </div>
             Sắp xếp:
             <!-- Đoạn cần thêm -->
-            @Html.ActionLink("Theo tên", "Index", new { sortOrder = ViewBag.SortTheoTen })
+            @Html.ActionLink("Theo tên", "Index", new { sortOrder = ViewBag.SortTheoTen }) | @Html.ActionLink("Theo giá", "Index", new { sortOrder = ViewBag.SortTheoGia })
             <!-- Kết thúc -->
         </div>
     </div>
@@ -82,7 +82,7 @@
 
                     </div>
                     <h3 style="color: black">@item.TenSP</h3>
-                    <p style="color: black">@item.GiaMacDinh(item.MaSP)</p>
+                    <p style="color: black">@item.Gia</p>
 
                 </a>
             </div>
@@ -92,7 +92,7 @@
     <br />
 
     <div class="MenuTrang">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
     </div>
     <style>
         .MenuTrang li {

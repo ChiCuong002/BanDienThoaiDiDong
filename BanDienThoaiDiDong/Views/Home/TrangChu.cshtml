@@ -3,13 +3,14 @@
 @{
     ViewBag.Title = "TrangChu";
     Layout = "~/Views/Shared/_LayoutTangChu.cshtml";
+    List<BanDienThoaiDiDong.Models.LOAISANPHAM> listHang = ViewBag.dsHang;
 }
 
-<link rel="stylesheet" href="~/Content/style.css" />
-<link rel="stylesheet" href="~/Content/head.css" />
+<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/head.css" rel="stylesheet" />
 <script src="https://kit.fontawesome.com/ef3275e9a2.js" crossorigin="anonymous"></script>
 <link href="~/Content/swiper-bundle.min.css" rel="stylesheet" />
-<div class="trangchu-background">
+<div class="trangchu-background" style="background: none;">
     <div class="slider">
         <!--Hình 1-->
         <div class="myslide fadeaway" style="display:block">
@@ -39,31 +40,34 @@
             <p>
 
             </p>
+            <span>
+                Tìm kiếm: 
+            </span>
             <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
-                @Html.TextBox("SearchString", "", new { @class = "form-control" })
-                <input type="submit" class="btn btn-warning" value="Search" />
+                 @Html.TextBox("SearchString", "", new { @class = "form-control" })
+                <input type="submit" class="btn btn-secondary" value="Search" />
             </div>
         }
     </div>
     <div class="policy">
         <ul class="pr-policy">
             <li>
-                <div class="policy-item">
+                <div class="policy-item" style="color: black;">
                     <i class="icon fas fa-check-circle "></i><span>Mẫu mã đa dạng,<br> chính hãng</span>
                 </div>
             </li>
             <li>
-                <div class="policy-item">
+                <div class="policy-item" style="color: black;">
                     <i class="icon fas fa-truck "></i><span>Giao hàng toàn quốc</span>
                 </div>
             </li>
             <li>
-                <div class="policy-item">
+                <div class="policy-item" style="color: black;">
                     <i class="icon fas fa-user-shield "></i><span>Bảo hành có cam kết<br> tới 12 tháng</span>
                 </div>
             </li>
             <li>
-                <div class="policy-item">
+                <div class="policy-item" style="color: black;">
                     <i class="icon fas fa-undo-alt "></i><span>Có thể đổi trả<br> trong vòng 30 ngày</span>
                 </div>
             </li>
@@ -71,46 +75,30 @@
     </div>
     <div>
         <div class="choose-cate">
-            <div class="cate-column">
-                <a href="#">
-                    <div class="img-catesp cateiphone">
-                        <img width="102" height="112" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/42/250260/s16/iphone-13-pro-silver-1-1-650x650.png">
-                    </div>
-                    <span>Iphone</span>
-                </a>
-            </div>
-            <div class="cate-column">
-                <a href="#">
-                    <div class="img-catesp cateiphone">
-                        <img width="102" height="112" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/42/250260/s16/iphone-13-pro-silver-1-1-650x650.png">
-                    </div>
-                    <span>Iphone</span>
-                </a>
-            </div>
-            <div class="cate-column">
-                <a href="#">
-                    <div class="img-catesp cateiphone">
-                        <img width="102" height="112" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/42/250260/s16/iphone-13-pro-silver-1-1-650x650.png">
-                    </div>
-                    <span>Iphone</span>
-                </a>
-            </div>
-            <div class="cate-column">
-                <a href="#">
-                    <div class="img-catesp cateiphone">
-                        <img width="102" height="112" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/42/250260/s16/iphone-13-pro-silver-1-1-650x650.png">
-                    </div>
-                    <span>Iphone</span>
-                </a>
-            </div>
+            @foreach (var item in listHang)
+            {
+                <div class="cate-column" style="background-color: gainsboro;">
+                    <a href="#">
+                        <div class="img-catesp cateiphone">
+                            <img width="102" height="112" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_300x300/https://cdn.tgdd.vn/Products/Images/42/250260/s16/iphone-13-pro-silver-1-1-650x650.png">
+                        </div>
+                        <span>@item.TenLoai</span>
+                    </a>
+                </div>
+            }
+
+
         </div>
     </div>
     <!--product slide-->
-    <div class="listing-cate">
+    <h2 style="text-align: center;">
+        SẢN PHẨM TIÊU BIỂU
+    </h2>
+    <div class="listing-cate" >
         @foreach (var item in Model)
         {
 
-            <div class="listing-cate-item">
+            <div class="listing-cate-item" style="background-color: gainsboro;">
                 <a href="">
                     <label for="">Mới</label>
 
@@ -122,12 +110,13 @@
                     </div>
 
                     <h3 style="color: black">@item.TenSP</h3>
-                    <p style="color: black">@item.GiaMacDinh(item.MaSP)</p>
+                    <p style="color: black">@item.Gia</p>
 
                 </a>
             </div>
 
         }
+    </div>
     </div>
     <script src="~/Scripts/swiper-bundle.min.js"></script>
     <script src="~/Scripts/script.js"></script>
