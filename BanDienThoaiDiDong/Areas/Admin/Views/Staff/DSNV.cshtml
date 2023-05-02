@@ -1,0 +1,75 @@
+﻿@model List<BanDienThoaiDiDong.Models.NHANVIEN>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="~/Content/DSNV.css" />
+    <title>Danh sách nhân viên</title>
+</head>
+<body>
+    <div class="container">
+        @if (ViewBag.FileError != null)
+        {
+            <div class="alert alert-danger">
+                <p>@ViewBag.FileError</p>
+            </div>
+        }
+        @if (ViewBag.ImportError != null)
+        {
+            <div class="alert alert-danger">
+                <p>@ViewBag.ImportError</p>
+            </div>
+        }
+        @if (ViewBag.ImportSuccess != null)
+        {
+            <div class="alert alert-danger">
+                <p>@ViewBag.ImportSuccess</p>
+            </div>
+        }
+        <div class="form">
+            <form action="~/Admin/Staff/Import" method="post" enctype="multipart/form-data">
+                <label for="file-input" class="drop-container">
+                    <span class="drop-title">Thả tập tin vào đây</span>
+                    hoặc
+                    <input type="file" required="" id="file-input" name="file" />
+                </label>
+                <button type="submit">Import</button>
+            </form>
+        </div>
+        <div class="table">
+            <h2 style="text-align: center; text-transform: uppercase">
+                Danh sách nhân viên
+            </h2>
+            <table>
+                <tr>
+                    <th>MaNV</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Địa chỉ</th>
+                    <th>Số điện thoại</th>
+                    <th>UserName</th>
+                    <th>Mật khẩu</th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.MaNV)</td>
+                        <td>@Html.DisplayFor(modelItem => item.HoTen) </td>
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SoDienThoai)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MatKhau)</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -21,17 +21,18 @@ namespace BanDienThoaiDiDong.Models
         }
     
         public string MaHD { get; set; }
-        public Nullable<System.DateTime> NgayDatHang { get; set; }
         public Nullable<int> MaKH { get; set; }
+        public Nullable<System.DateTime> NgayDatHang { get; set; }
         public string DiaChiGiaoHang { get; set; }
         public Nullable<decimal> TongGiaTri { get; set; }
         public string TrangThaiTT { get; set; }
         public string TrangThaiDH { get; set; }
+        public Nullable<int> MaNV { get; set; }
         public Nullable<bool> New { get; set; }
-        public Nullable<bool> HienThi { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHITIETHDBAN> CHITIETHDBANs { get; set; }
         public virtual KHACHHANG KHACHHANG { get; set; }
+        public virtual NHANVIEN NHANVIEN { get; set; }
     }
 }

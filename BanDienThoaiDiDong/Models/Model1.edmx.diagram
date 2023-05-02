@@ -4,26 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="23df6304176b4a63be696a8801be931e" Name="Diagram1">
-        <EntityTypeShape EntityType="DB_DiDongModel.AdminUser" Width="1.5" PointX="11" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_DiDongModel.Capacity" Width="1.5" PointX="6" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_DiDongModel.CHITIETHDBAN" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_DiDongModel.ChiTietSP" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_DiDongModel.Color" Width="1.5" PointX="6" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_DiDongModel.HDBAN" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_DiDongModel.KHACHHANG" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_DiDongModel.LOAISANPHAM" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_DiDongModel.NhanVien" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_DiDongModel.Role" Width="1.5" PointX="8.75" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_DiDongModel.SANPHAM" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <AssociationConnector Association="DB_DiDongModel.FK_AdminUser_Roles" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_DiDongModel.FK_Capacity_SP" ManuallyRouted="false" />
+      <Diagram DiagramId="4cf6f06f5f4d4811baa91de4d4b3990e" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_DiDongModel.Capacity" Width="1.5" PointX="5.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.ChiTietGH" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.CHITIETHDBAN" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.Color" Width="1.5" PointX="7.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.GIOHANG" Width="1.5" PointX="3" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.HDBAN" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.KHACHHANG" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.LOAISANPHAM" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.NHANVIEN" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.ROLE" Width="1.5" PointX="1.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.SANPHAM" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_DiDongModel.Seri" Width="1.5" PointX="7.75" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="DB_DiDongModel.FK_ChiTietFH_GIOHANG" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_ChiTietGH_SANPHAM" ManuallyRouted="false" />
         <AssociationConnector Association="DB_DiDongModel.FK_CHITIETHDBAN_HDBAN" ManuallyRouted="false" />
         <AssociationConnector Association="DB_DiDongModel.FK_CHITIETHDBAN_SANPHAM" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_DiDongModel.FK_ChiTietSP_SP" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_DiDongModel.FK_Color_SP" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_GIOHANG_KHACHHANG" ManuallyRouted="false" />
         <AssociationConnector Association="DB_DiDongModel.FK_HDBAN_KHACHHANG" ManuallyRouted="false" />
-        <AssociationConnector Association="DB_DiDongModel.FK_SANPHAM_LOAISANPHAM" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_HDBAN_NHANVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_SANPHAM_LOAISP" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_DiDongModel.FK_NhanVien_Roles" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

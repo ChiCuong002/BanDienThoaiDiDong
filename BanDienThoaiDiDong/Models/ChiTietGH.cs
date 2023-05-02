@@ -12,14 +12,14 @@ namespace BanDienThoaiDiDong.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AdminUser
+    public partial class ChiTietGH
     {
-        public int ID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public Nullable<int> RoleUser { get; set; }
-        public Nullable<bool> TrangThai { get; set; }
+        public int id { get; set; }
+        public Nullable<int> MaGH { get; set; }
+        public string MaSP { get; set; }
+        public Nullable<int> SoLuong { get; set; }
     
-        public virtual Role Role { get; set; }
+        public virtual GIOHANG GIOHANG { get; set; }
+        public virtual SANPHAM SANPHAM { get; set; }
     }
 }

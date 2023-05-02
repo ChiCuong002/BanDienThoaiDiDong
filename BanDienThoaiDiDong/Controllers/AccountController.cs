@@ -1,15 +1,18 @@
 ﻿using BanDienThoaiDiDong.DAO;
 using BanDienThoaiDiDong.Models;
+using DocumentFormat.OpenXml.EMMA;
 using Facebook;
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
+using System.Web.Security;
+
 
 namespace BanDienThoaiDiDong.Controllers
 {
@@ -17,7 +20,7 @@ namespace BanDienThoaiDiDong.Controllers
     {
         DB_DiDongEntities db = new DB_DiDongEntities();
 
-        //Regiter
+        //Register
 
         [HttpGet]
         public ActionResult Register()
@@ -30,24 +33,45 @@ namespace BanDienThoaiDiDong.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(kh.HoTen))
+                    ModelState.AddModelError(string.Empty, "Tên đăng nhập không được để trống");
+                if (string.IsNullOrEmpty(kh.Email))
+                    ModelState.AddModelError(string.Empty, "Email không được để trống");
+                if (string.IsNullOrEmpty(kh.DiaChi))
+                    ModelState.AddModelError(string.Empty, "Địa chỉ không được để trống");
+                if (string.IsNullOrEmpty(kh.SoDienThoai))
+                    ModelState.AddModelError(string.Empty, "Số điện thoại không được để trống");
+                if (string.IsNullOrEmpty(kh.MatKhau))
+                    ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
+                // kiểm tra email đã tồn tại chưa
                 var check = db.KHACHHANGs.FirstOrDefault(s => s.Email == kh.Email);
-                if (check == null)
+                if (check != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Email đã tồn tại!");
+                }
+
+                if (kh.MatKhau != kh.confirmMatKhau)
+                {
+                    ModelState.AddModelError("", "Mật khẩu không khớp!");
+                }
+
+                if (ModelState.IsValid)
                 {
                     db.Configuration.ValidateOnSaveEnabled = false;
                     db.KHACHHANGs.Add(kh);
                     db.SaveChanges();
-                    return RedirectToAction("Login", "Login");
+                    return RedirectToAction("Login", "Account");
                 }
                 else
                 {
-                    ViewBag.error = "Email đã tồn tại!";
-                    return View();
+                    return View(kh);
                 }
             }
-            return View();
+            return View(kh);
         }
 
         //Login
+        [HttpGet]
         public ActionResult Login()
         {
             return View();
@@ -56,27 +80,87 @@ namespace BanDienThoaiDiDong.Controllers
         [HttpPost]
         public ActionResult Authen(KHACHHANG kh)
         {
-            var check = db.KHACHHANGs.Where(s => s.Email.Equals(kh.Email) && s.MatKhau.Equals(kh.MatKhau)).FirstOrDefault();
-            if (check == null)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Email hoặc mật khẩu không hợp lệ!");
-                return View("Login", kh);
+                if (string.IsNullOrEmpty(kh.Email))
+                    ModelState.AddModelError(string.Empty, "Email không được để trống");
+                if (string.IsNullOrEmpty(kh.MatKhau))
+                    ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
+                if (ModelState.IsValid)
+                {
+                    var check = db.KHACHHANGs.FirstOrDefault(s => s.Email.Equals(kh.Email) && s.MatKhau.Equals(kh.MatKhau));
+                    if (check == null)
+                    {
+                        ModelState.AddModelError("", "Email hoặc mật khẩu không hợp lệ!");  
+                        return View("Login", kh);
+                    }
+                    else
+                    {
+                        //Session["KH"] = check;
+                        Session["kh"] = check;
+                        return RedirectToAction("Index", "Home");
+                        //KHACHHANG khach = Session["KH"] as KHACHHANG;
+                    }
+                }
             }
-            else
-            {
-                //Session["KH"] = check;
-                Session["kh"] = check;
-                //KHACHHANG khach = Session["KH"] as KHACHHANG;
-
-                return RedirectToAction("TrangChu", "Home");
-            }
+            return View(kh);
         }
 
         //Logout
         public ActionResult Logout()
         {
             Session.Abandon();
-            return RedirectToAction("Login", "Login");
+            return RedirectToAction("Login", "Account");
+        }
+
+        //Change password
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(ChangePassword changePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                if (string.IsNullOrEmpty(changePassword.OldPassword))
+                    ModelState.AddModelError("OldPassword", "Vui lòng điền mật khẩu cũ");
+                if (string.IsNullOrEmpty(changePassword.MatKhauMoi))
+                    ModelState.AddModelError("MatKhauMoi", "Vui lòng điền mật khẩu mới");
+                if (string.IsNullOrEmpty(changePassword.ConfirmMatKhauMoi))
+                    ModelState.AddModelError("ConfirmMatKhauMoi", "Vui lòng xác nhận mật khẩu mới");
+                if (changePassword.MatKhauMoi != changePassword.ConfirmMatKhauMoi)
+                    ModelState.AddModelError("ConfirmMatKhauMoi", "Mật khẩu không khớp");
+                if (ModelState.IsValid)
+                {
+                    var email = ((KHACHHANG)Session["kh"])?.Email;
+                    if (email != null)
+                    {
+                        var customer = db.KHACHHANGs.FirstOrDefault(c => c.Email == email);
+                        if (customer != null && customer.MatKhau == changePassword.OldPassword)
+                        {
+                            customer.MatKhau = changePassword.MatKhauMoi;
+                            db.Entry(customer).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return RedirectToAction("Login");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("OldPassword", "Mật khẩu cũ không hợp lệ!");
+                            return View(changePassword);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Session email bị null hoặc rỗng");
+                        return View(changePassword);
+                    }
+                }
+            }
+            return View(changePassword);
         }
 
         //Login with Facebook
@@ -121,21 +205,14 @@ namespace BanDienThoaiDiDong.Controllers
             {
                 //lấy thông tin của người dùng từ Facebook
                 fb.AccessToken = accessToken;
-                dynamic me = fb.Get("me?fields = link, first_name, currency, middle_name, last_name, email, gender, locale, timezone, verified, picture, age_range, phoneNumber");
-                string firstName = me.first_name;
-                string middleName = me.middle_name;
-                string lastName = me.last_name;
+                dynamic me = fb.Get("me?fields=id, name, email");
+                string name = me.name;
                 string email = me.email;
-                string password = me.password;
-                string locale = me.locale;
-                string phone = me.phone;
+                FormsAuthentication.SetAuthCookie(email, false);
                 //gán vào đối tượng khách hàng
                 var user = new KHACHHANG();
                 user.Email= email;
-                user.HoTen = firstName + " " + middleName + " " + lastName;
-                user.DiaChi = locale;
-                user.SoDienThoai = phone;
-                user.MatKhau= password;
+                user.HoTen = name;
                 //
                 var resultInsert = new UserDAO().InsertForFacebook(user);
                 if (resultInsert > 0)
