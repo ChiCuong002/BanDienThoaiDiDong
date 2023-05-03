@@ -12,10 +12,9 @@ namespace BanDienThoaiDiDong.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Color
+    public partial class Seri
     {
-        public string MaColor { get; set; }
-        public string TenMau { get; set; }
-        public string HexColor { get; set; }
+        public string SeriMay { get; set; }
+        public string TenSeriMay { get; set; }
     }
 }

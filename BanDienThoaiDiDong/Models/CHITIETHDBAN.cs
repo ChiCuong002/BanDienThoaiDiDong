@@ -15,10 +15,8 @@ namespace BanDienThoaiDiDong.Models
     public partial class CHITIETHDBAN
     {
         public int MaCTHD { get; set; }
-        public Nullable<int> ID_SanPham { get; set; }
+        public string ID_SanPham { get; set; }
         public string ID_HDBAN { get; set; }
-        public string Mau { get; set; }
-        public string DungLuong { get; set; }
         public Nullable<int> SoLuongDatHang { get; set; }
         public Nullable<decimal> DonGia { get; set; }
     

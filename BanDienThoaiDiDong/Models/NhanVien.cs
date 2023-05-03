@@ -12,13 +12,25 @@ namespace BanDienThoaiDiDong.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class NhanVien
+    public partial class NHANVIEN
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public NHANVIEN()
+        {
+            this.HDBANs = new HashSet<HDBAN>();
+        }
+    
         public int MaNV { get; set; }
         public string HoTen { get; set; }
         public string Email { get; set; }
         public string DiaChi { get; set; }
         public string SoDienThoai { get; set; }
-        public Nullable<int> UserID { get; set; }
+        public string UserName { get; set; }
+        public string MatKhau { get; set; }
+        public Nullable<int> Roles { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HDBAN> HDBANs { get; set; }
+        public virtual ROLE ROLE { get; set; }
     }
 }

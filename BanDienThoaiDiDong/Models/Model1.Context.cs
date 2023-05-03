@@ -25,16 +25,17 @@ namespace BanDienThoaiDiDong.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AdminUser> AdminUsers { get; set; }
         public virtual DbSet<Capacity> Capacities { get; set; }
+        public virtual DbSet<ChiTietGH> ChiTietGHs { get; set; }
         public virtual DbSet<CHITIETHDBAN> CHITIETHDBANs { get; set; }
-        public virtual DbSet<ChiTietSP> ChiTietSPs { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
+        public virtual DbSet<GIOHANG> GIOHANGs { get; set; }
         public virtual DbSet<HDBAN> HDBANs { get; set; }
         public virtual DbSet<KHACHHANG> KHACHHANGs { get; set; }
         public virtual DbSet<LOAISANPHAM> LOAISANPHAMs { get; set; }
-        public virtual DbSet<NhanVien> NhanViens { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<NHANVIEN> NHANVIENs { get; set; }
+        public virtual DbSet<ROLE> ROLES { get; set; }
         public virtual DbSet<SANPHAM> SANPHAMs { get; set; }
+        public virtual DbSet<Seri> Seris { get; set; }
     }
 }
