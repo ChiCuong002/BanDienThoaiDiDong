@@ -8,97 +8,98 @@
 
 <script src="~/Content/jsSlide.js"></script>
 <script src="~/Content/js.js"></script>
-<link href="~/Content/danhsachsanpham.css" rel="stylesheet" />
-<section>
-    <img class="logo" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Category/42/WiPhone-120x35.png" alt="">
+<link href="~/Content/dssp.css" rel="stylesheet" />
+<div style="background: white;">
+    <section>
+        <img class="logo" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Category/42/WiPhone-120x35.png" alt="">
 
-    <div class="slider">
-        <i class="fas fa-arrow-left left slider-prev"></i>
+        <div class="slider">
+            <i class="fas fa-arrow-left left slider-prev"></i>
 
-        <div class="slider-wrapper">
-            <div class="slider-main">
-                <div class="slider-item">
-                    <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1170x300/https://cdn.tgdd.vn/2023/03/banner/wo-top-2400-600-1920x480-1.png" alt="">
+            <div class="slider-wrapper">
+                <div class="slider-main">
+                    <div class="slider-item">
+                        <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1170x300/https://cdn.tgdd.vn/2023/03/banner/wo-top-2400-600-1920x480-1.png" alt="">
+                    </div>
+                    <div class="slider-item">
+                        <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1170x300/https://cdn.tgdd.vn/2023/03/banner/ip11-2400-600-1920x480.png" alt="">
+                    </div>
+
                 </div>
-                <div class="slider-item">
-                    <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1170x300/https://cdn.tgdd.vn/2023/03/banner/ip11-2400-600-1920x480.png" alt="">
-                </div>
-
             </div>
-        </div>
-        <i class="fas fa-arrow-right right slider-next"></i>
-
-    </div>
-    <div>
-        <p>
-
-        </p>
-    </div>
-
-    <div class="filter-cate">
-        <div class="ft-cate">
+            <i class="fas fa-arrow-right right slider-next"></i>
 
         </div>
         <div>
-            @using (Html.BeginForm())
-            {
-                <p>
+            <p>
 
-                </p>
-                <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
-                    @Html.TextBox("SearchString", "", new { @class = "form-control" })
-                    <input type="submit" class="btn btn-warning" value="Search" />
+            </p>
+        </div>
+
+        <div class="filter-cate">
+            <div class="ft-cate">
+
+            </div>
+            <div>
+                @using (Html.BeginForm())
+                {
+                    <p>
+
+                    </p>
+                    <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
+                        @Html.TextBox("SearchString", "", new { @class = "form-control" })
+                        <input type="submit" class="btn btn-warning" value="Search" />
+                    </div>
+                }
+                <div>
+                    <p>
+
+                    </p>
+                </div>
+                Sắp xếp:
+                <!-- Đoạn cần thêm -->
+                @Html.ActionLink("Theo tên", "Index", new { sortOrder = ViewBag.SortTheoTen }) | @Html.ActionLink("Theo giá", "Index", new { sortOrder = ViewBag.SortTheoGia })
+                <!-- Kết thúc -->
+            </div>
+        </div>
+        <div>
+            <p>
+
+            </p>
+        </div>
+        <div class="listing-cate">
+            @foreach (var item in Model)
+            {
+                <div class="listing-cate-item" style="background: white;">
+                    <a href="">
+                        <label for="">Mới</label>
+                        <div class="item-img">
+                            <a href="@Url.Action("Index","DetailProduct",new {id = item.MaSP})">
+                                <img src="@item.Hinh" alt="">
+                            </a>
+
+                        </div>
+                        <div class="prods-group">
+
+                        </div>
+                        <h3 style="color: black">@item.TenSP</h3>
+                        <p style="color: black">@item.Gia</p>
+
+                    </a>
                 </div>
             }
-            <div>
-                <p>
 
-                </p>
-            </div>
-            Sắp xếp:
-            <!-- Đoạn cần thêm -->
-            @Html.ActionLink("Theo tên", "Index", new { sortOrder = ViewBag.SortTheoTen }) | @Html.ActionLink("Theo giá", "Index", new { sortOrder = ViewBag.SortTheoGia })
-            <!-- Kết thúc -->
         </div>
-    </div>
-    <div>
-        <p>
+        <br />
 
-        </p>
-    </div>
-    <div class="listing-cate">
-        @foreach (var item in Model)
-        {
-            <div class="listing-cate-item">
-                <a href="">
-                    <label for="">Mới</label>
-                    <div class="item-img">
-                        <a href="@Url.Action("Index","DetailProduct",new {id = item.MaSP})">
-                            <img src="@item.Hinh" alt="">
-                        </a>
-
-                    </div>
-                    <div class="prods-group">
-
-                    </div>
-                    <h3 style="color: black">@item.TenSP</h3>
-                    <p style="color: black">@item.Gia</p>
-
-                </a>
-            </div>
-        }
-
-    </div>
-    <br />
-
-    <div class="MenuTrang">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
-    </div>
-    <style>
-        .MenuTrang li {
-            display: inline;
-        }
-    </style>
-</section>
-
+        <div class="MenuTrang">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        </div>
+        <style>
+            .MenuTrang li {
+                display: inline;
+            }
+        </style>
+    </section>
+</div>
 

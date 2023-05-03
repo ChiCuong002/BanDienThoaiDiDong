@@ -7,11 +7,11 @@
     List<BanDienThoaiDiDong.Models.LOAISANPHAM> listHang = ViewBag.dsHang;
 
 }
-
-<script src="~/Content/js.js"></script>
-<script src="~/Content/jsSlide.js"></script>
-<link href="~/Content/danhsachsanpham.css" rel="stylesheet" />
-<section>
+<div style="background: white;">
+    <script src="~/Content/js.js"></script>
+    <script src="~/Content/jsSlide.js"></script>
+    <link href="~/Content/dssp.css" rel="stylesheet" />
+    <section>
         <img class="logo" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Category/42/WiPhone-120x35.png" alt="">
 
         <div class="slider">
@@ -68,7 +68,7 @@
         <div class="listing-cate">
             @foreach (var item in Model)
             {
-                <div class="listing-cate-item">
+                <div class="listing-cate-item" style="background: ; margin-bottom: 0px;">
                     <a href="">
                         <label for="">Mới</label>
                         <div class="item-img">
@@ -97,7 +97,7 @@
                 display: inline;
             }
         </style>
-</section>
-
+    </section>
+</div>
 
 
