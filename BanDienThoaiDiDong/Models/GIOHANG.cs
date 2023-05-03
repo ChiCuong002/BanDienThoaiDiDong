@@ -12,17 +12,13 @@ namespace BanDienThoaiDiDong.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ChiTietSP
+    public partial class GIOHANG
     {
         public int id { get; set; }
-        public Nullable<int> MaSP { get; set; }
-        public Nullable<int> MaColor { get; set; }
-        public Nullable<int> MaCapacity { get; set; }
-        public Nullable<double> Gia { get; set; }
-        public Nullable<int> SoLuong { get; set; }
+        public Nullable<int> MaKH { get; set; }
+        public Nullable<bool> TrangThai { get; set; }
     
-        public virtual Capacity Capacity { get; set; }
-        public virtual SANPHAM SANPHAM { get; set; }
-        public virtual Color Color { get; set; }
+        public virtual ChiTietGH ChiTietGH { get; set; }
+        public virtual KHACHHANG KHACHHANG { get; set; }
     }
 }

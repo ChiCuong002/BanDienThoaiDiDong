@@ -30,7 +30,7 @@ namespace BanDienThoaiDiDong.Areas.NVQLDonHang.Controllers
             return View(order.ToPagedList(pageNum, pageSize));
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
             var order = database.HDBANs.Where(c => c.MaHD == id.ToString()).FirstOrDefault();
             var chitiet = database.CHITIETHDBANs.Where(c => c.ID_HDBAN == id.ToString()).ToList();
@@ -86,7 +86,7 @@ namespace BanDienThoaiDiDong.Areas.NVQLDonHang.Controllers
             try
             {
                 var order = database.HDBANs.Where(c => c.MaHD == id).FirstOrDefault();
-                order.HienThi = false;
+               
                 database.Entry(order).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
                 return RedirectToAction("DSDonHang");
