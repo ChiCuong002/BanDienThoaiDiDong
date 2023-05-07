@@ -43,10 +43,7 @@ namespace BanDienThoaiDiDong.Controllers
                 lstSanPham = database.SANPHAMs.Where(n => n.TenSP.Contains(SearchString)).ToList();
 
             }
-            else
-            {
-                lstSanPham = database.SANPHAMs.ToList();
-            }
+             
             ViewBag.dsHang = database.LOAISANPHAMs.ToList();
             return View(lstSanPham);
         }

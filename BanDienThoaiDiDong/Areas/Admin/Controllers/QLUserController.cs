@@ -1,4 +1,5 @@
 ﻿using BanDienThoaiDiDong.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,17 @@ namespace BanDienThoaiDiDong.Areas.Admin.Controllers
     {
         DB_DiDongEntities database = new DB_DiDongEntities();
         // GET: Admin/QuanLyUser
-        public ActionResult Index()
+        public ActionResult Index(string searchString, int? page)
         {
             var lstNguoiDung = database.KHACHHANGs.ToList();
-            return View(lstNguoiDung);
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                lstNguoiDung = database.KHACHHANGs.Where(n => n.HoTen.Contains(searchString)).ToList();
+
+            }
+            int pageSize = 9;
+            int pageNumber = (page ?? 1);
+            return View(lstNguoiDung.ToPagedList(pageNumber, pageSize));
         }
         [HttpGet]
         public ActionResult Delete(int id)

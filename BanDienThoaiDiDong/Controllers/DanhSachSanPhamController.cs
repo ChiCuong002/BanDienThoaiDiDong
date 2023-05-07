@@ -59,7 +59,7 @@ namespace BanDienThoaiDiDong.Controllers
             ViewBag.dsHang = database.LOAISANPHAMs.ToList();
             int pageSize = 9;
             int pageNumber = (page ?? 1);
-            return View(lstSanPham.ToPagedList(pageNumber, pageSize));
+            return PartialView("Index",lstSanPham.ToPagedList(pageNumber, pageSize));
         }
         public ActionResult SanPhamTheoThuongHieu(int id, string SearchString, string sortOrder, int? page, string currentFilter)
         {

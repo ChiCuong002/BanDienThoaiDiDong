@@ -1,111 +1,601 @@
-﻿@model IEnumerable<BanDienThoaiDiDong.Models.KHACHHANG>
+﻿@using PagedList.Mvc;
+@using BanDienThoaiDiDong.Models
+@model PagedList.PagedList<BanDienThoaiDiDong.Models.KHACHHANG>
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutTangChu.cshtml";
+
 }
 
-<h2>Index</h2>
 
-<div class="account_desc">
-    <ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f6f5fb;
+        }
+
+        aside {
+            width: 16rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            position: fixed;
+            top: 1px;
+            bottom: 1px;
+            left: 0;
+            z-index: 3;
+            border-top-right-radius: 35px;
+            border-bottom-right-radius: 35px;
+            transition: width 0.5s;
+            padding: 20px 0px;
+        }
+
+
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        header {
+            background-image: linear-gradient(to left,#F35C17,#FF920B);
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 2;
+            padding-left: calc(16rem + 48px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 48px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: #fff;
+            font-weight: 300;
+        }
+
+        .togger {
+            padding-left: calc(5.2rem + 48px);
+        }
+
+        .aside-togger {
+            width: 85px;
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 999px;
+            background-color: hsla(0,0%,100%,.15);
+            padding: 4px;
+        }
+
+            .nav-header img {
+                display: inline-block;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                border: 4px solid rgba(225,225,255,.37);
+                margin-right: 10px;
+            }
+
+            .nav-header i {
+                display: block;
+                margin-top: -5px;
+                color: white;
+                margin-left: 10px;
+                margin-right: 20px;
+            }
+
+        .nav {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-content {
+            display: block;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 12px 20px 0 rgba(0,0,0,.08);
+            border-radius: 6px;
+            z-index: 2;
+            padding: 5px 0px;
+            list-style: none;
+            color: #929baa;
+            right: 0;
+            margin-top: 5px;
+            min-width: 160px;
+        }
+
+            .nav-content li {
+                padding: 6px 16px;
+            }
+
+                .nav-content li:hover {
+                    background-color: #f6f7f9;
+                }
+
+        .nav-header:hover .nav-content {
+            display: block;
+        }
+
+        #show {
+            background-color: #FF7B1D;
+            border-radius: 100%;
+            position: absolute;
+            top: 110px;
+            right: -12px;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+
+        aside > img {
+            display: inline-block;
+            height: 50px;
+            width: 150px;
+            max-width: 200px;
+        }
+
+        .sidebar-logo {
+            padding-top: 20px;
+            cursor: pointer;
+        }
+
+        .sidebar-content {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            margin-top: 50px;
+            padding-right: 8px;
+        }
+
+            .sidebar-content .item {
+                width: 100%;
+                border-top-right-radius: 50px;
+                border-bottom-right-radius: 50px;
+                padding: 8px 16px 8px 24px;
+                cursor: pointer;
+                color: #64728c;
+                display: flex;
+                justify-content: center;
+                text-decoration: none;
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                font-size: 1rem;
+                font-weight: 500;
+                font-family: Nunito Sans;
+                overflow: hidden;
+            }
+
+                .sidebar-content .item img {
+                    display: inline-block;
+                    width: 26px;
+                    height: 26px;
+                    margin-right: 10px;
+                }
+
+                .sidebar-content .item span {
+                    text-align: left;
+                }
+
+                .sidebar-content .item:hover {
+                    background-color: rgba(255, 123, 29, 0.1);
+                }
+
+        .active {
+            background-image: linear-gradient(to left,#F35C17,#FF920B);
+            color: #fff;
+        }
+
+            .active > span {
+                color: #fff;
+            }
+
+        .sidebar-content .item i {
+            color: black;
+        }
+
+        .none {
+            display: none;
+        }
+
+
+        /* CSS nội dung */
+        .content {
+            padding-top: 4rem;
+            padding-left: calc(16rem + 48px);
+            padding-right: 48px;
+            color: #64728c;
+        }
+
+            .content > .tb {
+                margin-top: 5rem;
+                background-color: #fff;
+                border-radius: 1.2rem;
+            }
+
+        .add-product {
+            border-bottom: .5px solid #64728c;
+            padding: 25px;
+        }
+
+        h3 {
+            padding: 25px;
+        }
+
+        .add-product > button {
+            color: #fff;
+            background-color: #76BC21;
+            cursor: pointer;
+            font-family: Nunito Sans;
+            font-weight: 500;
+            border: 0;
+            border-radius: 3em;
+            display: inline-block;
+            line-height: 1;
+            padding-right: 32px;
+            padding-left: 32px;
+            min-width: 100px;
+            font-size: 14px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            text-align: center;
+        }
+
+            .add-product > button:hover {
+                background-color: #84d225;
+            }
+
+        .tb-product {
+            background-color: #e8eaef;
+            padding: 0.5rem;
+            font-family: Nunito Sans;
+            font-size: 0.85rem;
+        }
+
+        .tb-product-item {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-around;
+            background-color: #fff;
+            border-radius: 1.2rem;
+            min-height: 45px;
+            align-items: center;
+            font-weight: 400px;
+            padding: 10px;
+            flex-wrap: nowrap;
+            margin-bottom: 10px;
+        }
+
+            .tb-product-item > div {
+                min-width: 12%;
+            }
+
+            .tb-product-item:hover {
+                background-color: rgba(37, 21, 21, 0.1);
+            }
+
+        .tb-product-acition i {
+            display: inline-block;
+            color: #64728c;
+            background-color: rgba(37, 21, 21, 0.2);
+            border-radius: 50%;
+            padding: 3px;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-right: 5px;
+        }
+
+            .tb-product-acition i:hover {
+                background-color: rgba(37, 21, 21, 0.3);
+            }
+
+        .tb-product-des {
+            text-align: justify;
+            flex: 3;
+        }
+
+        .tb-product-name {
+            text-align: center;
+            flex: 1;
+        }
+
+        .tb-product-img {
+            margin-left: 15px;
+            flex: 1;
+        }
+
+            .tb-product-img > img {
+                display: inline-block;
+                width: 80%;
+            }
+
+        .header {
+            background-color: transparent;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .tb-product-status {
+            flex: 1;
+        }
+
+        .tb-product-type {
+            flex: 1;
+        }
+
+        .tb-product-acition {
+            flex: 1;
+        }
+        /* End css Nội dung */
+    </style>
+</head>
+<body>
+    <div class="bg none">
+
+    </div>
+    <!-- sidebar -->
+    <aside>
+        <div class="sidebar-logo">
+            <img src=" " alt="">
+        </div>
+        <i id="show" class="fas fa-chevron-right"></i>
+        <div class="sidebar-content">
+            <a class="item active">
+                <img src="https://img.icons8.com/external-justicon-lineal-justicon/64/null/external-phone-valentines-day-justicon-lineal-justicon.png" />
+                <span>Quản lý sản phẩm</span>
+            </a>
+            <a class="item">
+                <img src="https://img.icons8.com/external-justicon-lineal-justicon/64/null/external-phone-valentines-day-justicon-lineal-justicon.png" />
+                <span>Quản lý sản phẩm</span>
+            </a>
+            <a class="item">
+                <img src="https://img.icons8.com/external-justicon-lineal-justicon/64/null/external-phone-valentines-day-justicon-lineal-justicon.png" />
+                <span>Quản lý sản phẩm</span>
+            </a>
+
+        </div>
+    </aside>
+    <!-- End sidebar -->
+    <header class="">
+        <h3>Admin</h3>
+
+
+        <!-- Đăng nhập đăng xuất -->
         @if (Session["Email"] != null)
         {
-            <li class="active">
-                <a href="/Admin/QLUser/Profile"> Xin chào: @Session["Hoten"] </a>
-              
-            </li>
-            <li class="active">
-                <a href="/Admin/QLUser/DangXuat">Đăng xuất</a>
-            </li>
+            <div class="nav">
+                <div class="nav-header">
+                    <img src="https://img5.thuthuatphanmem.vn/uploads/2021/11/20/anh-cute-nguoi-that-dep-nhat_022606213.jpg" alt="">
+                    <p>@Session["Hoten"]</p>
+                    <i class="fas fa-sort-down"></i>
+                </div>
+                <ul class="nav-content none">
+                    <li>@Session["Hoten"]</li>
+                    <li class="active" style="color: white;">
+                        <a href="/Admin/QLUser/DangXuat" style="color: white;">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Kết thúc đăng nhập đăng xuất -->
         }
         else
         {
-            <li class="active"><a href="/Admin/QLUser/DangNhap">Đăng nhập</a></li>
-            <li class="active"> <a href="/Admin/QLUser/DangKy">Đăng ký</a></li>
-        }
-
-
-    </ul>
-</div>
- 
-
-
-
-
-
-<div style="margin: 20px auto; width: 70%;">
-    <div>
-        <h2 style="text-align: center">DANH SÁCH KHÁCH HÀNG</h2>
-    </div>
-
-    <div style="text-align: center">
-        @using (Html.BeginForm())
-        {
-            <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
-                @Html.TextBox("Searching", "", new { @class = "form-control" })
-                <input type="submit" class="btn btn-warning" value="Search" />
+            <div class="nav">
+                <div class="nav-header">
+                    <img src="https://img5.thuthuatphanmem.vn/uploads/2021/11/20/anh-cute-nguoi-that-dep-nhat_022606213.jpg" alt="">
+                    <p>@Session["Hoten"]</p>
+                    <i class="fas fa-sort-down"></i>
+                </div>
+                <ul class="nav-content none">
+                    <li class="active" style="color: white;"><a href="/Admin/QLUser/DangNhap" style="color: white;">Đăng nhập</a></li>
+                    <li class="active" style="color: white;">
+                        <a href="/Admin/QLUser/DangXuat" style="color: white;">Đăng ký</a>
+                    </li>
+                </ul>
             </div>
         }
-    </div>
+    </header>
+    <div id="main" class="content">
+        <div class="tb">
+            <div class="add-product">
+                <button>
+                    +Add
+                </button>
+                <div style="text-align: right">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
+                            @Html.TextBox("searchString", "", new { @class = "form-control" })
+                            <input type="submit" class="btn btn-success" value="Search" />
+                        </div>
+                    }
+                </div>
+            </div>
 
-    <div>
-        <p>
+            <h3>
+                Danh sách khách hàng
+            </h3>
+            <div class="tb-product">
+                <div class="tb-product-item header">
+                    <div class="tb-product-name">
+                        <span>STT</span>
+                    </div>
+                    <div class="tb-product-des">
+                        <span>Họ tên khách hàng</span>
+                    </div>
+                    <div class="tb-product-img">
+                        <span>Email</span>
+                    </div>
+                    <div class="tb-product-status">
+                        <span>Địa chỉ</span>
+                    </div>
+                    <div class="tb-product-type">
+                        <span>Số điện thoại</span>
+                    </div>
+                    <div class="tb-product-type">
+                        <span>Mật khẩu</span>
+                    </div>
+                    <div class="tb-product-type">
+                        <span>Hiển thị</span>
+                    </div>
+                    <div class="tb-product-acition">
 
-        </p>
-    </div>
-
-    <div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>HỌ TÊN KHÁCH HÀNG</th>
-                    <th>EMAIL</th>
-                    <th>ĐỊA CHỈ</th>
-                    <th>SỐ ĐIỆN THOẠI</th>
-                    <th>MẬT KHẨU</th>
-                    <th>HIỂN THỊ</th>
-
-                </tr>
-            </thead>
-
-            <tbody>
+                    </div>
+                </div>
                 @if (Model != null && Model.Any())
                 {
                     var i = 0;
                     foreach (var item in Model)
                     {
-                        <tr>
-                            <td>@(i+1)</td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.HoTen)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DiaChi)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SoDienThoai)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MatKhau)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.HienThi)
-                            </td>
-                             
-                            <td>
-
+                        <!-- Từng sản phẩm -->
+                        <div class="tb-product-item">
+                            <div class="tb-product-name">
+                                <span>@(i+1)</span>
+                            </div>
+                            <div class="tb-product-des">
+                                <span>@Html.DisplayFor(modelItem => item.HoTen)</span>
+                            </div>
+                            <div class="tb-product-img">
+                                <span>@Html.DisplayFor(modelItem => item.Email)</span>
+                            </div>
+                            <div class="tb-product-status">
+                                <span>@Html.DisplayFor(modelItem => item.DiaChi)</span>
+                            </div>
+                            <div class="tb-product-type">
+                                <span>@Html.DisplayFor(modelItem => item.SoDienThoai)</span>
+                            </div>
+                            <div class="tb-product-type">
+                                <span>@Html.DisplayFor(modelItem => item.MatKhau)</span>
+                            </div>
+                            <div class="tb-product-type">
+                                <span>@Html.DisplayFor(modelItem => item.HienThi)</span>
+                            </div>
+                            <div class="tb-product-acition">
                                 @Html.ActionLink("Xóa", "Delete", new { id = item.MaKH }, new { @class = "btn btn-danger" })
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
+                        <!-- Kết thúc từng sản phẩm -->
                         i++;
                     }
                 }
-            </tbody>
-        </table>
-    </div>
-</div>
+            </div>
+        </div>
+        <div>
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+            <div class="MenuTrang" style="text-align: center;">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            </div>
+            <style>
+                .MenuTrang li {
+                    display: inline;
+                }
+            </style>
+        </div>
+         
+        <script>
+            const btnElm = document.getElementById("show");
+            let isRotated = false;
+            let isExpanded = false;
+            btnElm.addEventListener("click", (e) => {
+                setTimeout(() => {
+                    document.querySelectorAll("body > aside > div.sidebar-content > a > span").forEach((item) => {
+                        item.classList.toggle('none');
+                    })
+                }, 300);
+                document.getElementsByTagName("header")[0].classList.toggle("togger");
+                document.getElementById("main").classList.toggle("togger");
+                document.getElementsByTagName("aside")[0].classList.toggle("aside-togger");
+
+                if (isRotated) {
+                    btnElm.style.transform = 'rotate(0deg)';
+                    isRotated = false;
+                } else {
+                    btnElm.style.transform = 'rotate(-180deg)';
+                    isRotated = true;
+                }
+
+                if (isExpanded) {
+                    box.style.width = '5.2rem';
+                    isExpanded = false;
+                } else {
+                    box.style.width = '16rem';
+                    isExpanded = true;
+                }
+
+            });
+            var navElm = document.getElementsByClassName('nav')[0];
+            navElm.addEventListener('click', (e) => {
+
+                document.getElementsByClassName('nav-content')[0].classList.remove('none');
+
+                document.addEventListener('click', function (event) {
+                    const outsideClick = !document.getElementsByClassName('nav')[0].contains(event.target);
+                    if (outsideClick) {
+                        document.getElementsByClassName('nav-content')[0].classList.add('none');
+                    }
+                });
+            });
+        </script>
+</body>
+ 
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

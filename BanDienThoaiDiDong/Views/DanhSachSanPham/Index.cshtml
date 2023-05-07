@@ -33,7 +33,7 @@
         </div>
 
 
-        <div class="filter-cate">
+        <div class="filter-cate ">
             <div class="ft-cate">
                 <a class="focus" href="">Tất cả</a>
                 @foreach (var item in listHang)
@@ -63,41 +63,61 @@
                 <!-- Đoạn cần thêm -->
                 @Html.ActionLink("Theo tên", "Index", new { sortOrder = ViewBag.SortTheoTen }) | @Html.ActionLink("Theo giá", "Index", new { sortOrder = ViewBag.SortTheoGia })
                 <!-- Kết thúc -->
+                @using (Html.BeginForm("Index", "DanhSachSanPham", FormMethod.Post, new { id = "myForm" }))
+                {
+                    @Html.DropDownList("sortOrder", new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Theo tên Z - A", Value = "ma_desc" },
+                        new SelectListItem { Text = "Giá tăng dần", Value = "price" },
+                        new SelectListItem { Text = "Giá giảm dần", Value = "price_desc" }
+                    }, new { onchange = "submitForm();" })
+
+                }
+
+
             </div>
-        </div>
-        <div class="listing-cate">
-            @foreach (var item in Model)
-            {
-                <div class="listing-cate-item" style="background: ; margin-bottom: 0px;">
-                    <a href="">
-                        <label for="">Mới</label>
-                        <div class="item-img">
-                            <a href="@Url.Action("Index","DetailProduct",new {id = item.MaSP})">
-                                <img src="@item.Hinh" alt="">
-                            </a>
-                        </div>
-                        <div class="prods-group">
+            <div class="listing-cate">
+                @foreach (var item in Model)
+                {
+                    <div class="listing-cate-item" style="background: ; margin-bottom: 0px;">
+                        <a href="">
+                            <label for="">Mới</label>
+                            <div class="item-img">
+                                <a href="@Url.Action("Index","DetailProduct",new {id = item.MaSP})">
+                                    <img src="@item.Hinh" alt="">
+                                </a>
+                            </div>
+                            <div class="prods-group">
 
-                        </div>
-                        <h3 style="color: black">@item.TenSP</h3>
-                        <p style="color: black">@item.Gia</p>
+                            </div>
+                            <h3 style="color: black">@item.TenSP</h3>
+                            <p style="color: black">@item.Gia</p>
 
-                    </a>
-                </div>
-            }
+                        </a>
+                    </div>
+                }
 
-        </div>
-        <br />
+            </div>
+            <br />
 
-        <div class="MenuTrang">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
-        </div>
-        <style>
-            .MenuTrang li {
-                display: inline;
-            }
-        </style>
+
+
     </section>
+    <div class="MenuTrang" style="text-align: center;">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+    <style>
+        .MenuTrang li {
+            display: inline;
+        }
+    </style>
 </div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    function submitForm() {
+        document.getElementById("myForm").submit();
+    }
+</script>
+
 
 
