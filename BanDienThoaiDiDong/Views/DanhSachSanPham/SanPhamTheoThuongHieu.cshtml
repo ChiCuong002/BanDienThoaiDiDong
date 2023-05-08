@@ -9,7 +9,7 @@
 <script src="~/Content/jsSlide.js"></script>
 <script src="~/Content/js.js"></script>
 <link href="~/Content/dssp.css" rel="stylesheet" />
-<div style="background: white;">
+<div style="background: gainsboro;">
     <section>
         <img class="logo" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Category/42/WiPhone-120x35.png" alt="">
 
@@ -60,6 +60,18 @@
                 <!-- Đoạn cần thêm -->
                 @Html.ActionLink("Theo tên", "Index", new { sortOrder = ViewBag.SortTheoTen }) | @Html.ActionLink("Theo giá", "Index", new { sortOrder = ViewBag.SortTheoGia })
                 <!-- Kết thúc -->
+                @using (Html.BeginForm("Index", "DanhSachSanPham", FormMethod.Post, new { id = "myForm" }))
+                {
+
+                    @Html.DropDownList("sortOrder", new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Theo tên A - Z", Value = "" },
+                        new SelectListItem { Text = "Theo tên Z - A", Value = "ma_desc" },
+                        new SelectListItem { Text = "Giá tăng dần", Value = "price" },
+                        new SelectListItem { Text = "Giá giảm dần", Value = "price_desc" }
+                    }, new { onchange = "submitForm();" })
+
+                }
             </div>
         </div>
         <div>
@@ -102,4 +114,9 @@
         </style>
     </section>
 </div>
+<script>
+    function submitForm() {
+        document.getElementById("myForm").submit();
+    }
+</script>
 

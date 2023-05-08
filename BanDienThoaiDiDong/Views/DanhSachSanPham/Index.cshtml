@@ -7,7 +7,7 @@
     List<BanDienThoaiDiDong.Models.LOAISANPHAM> listHang = ViewBag.dsHang;
 
 }
-<div style="background: white;">
+<div style="background: gainsboro;">
     <script src="~/Content/js.js"></script>
     <script src="~/Content/jsSlide.js"></script>
     <link href="~/Content/dssp.css" rel="stylesheet" />
@@ -58,28 +58,33 @@
 
                     </p>
                 </div>
-
-                Sắp xếp:
+                 
+                
                 <!-- Đoạn cần thêm -->
-                @Html.ActionLink("Theo tên", "Index", new { sortOrder = ViewBag.SortTheoTen }) | @Html.ActionLink("Theo giá", "Index", new { sortOrder = ViewBag.SortTheoGia })
-                <!-- Kết thúc -->
-                @using (Html.BeginForm("Index", "DanhSachSanPham", FormMethod.Post, new { id = "myForm" }))
-                {
-                    @Html.DropDownList("sortOrder", new List<SelectListItem>
+                
+                    <!-- Kết thúc -->
+                    Sắp xếp: 
+                    @using (Html.BeginForm("Index", "DanhSachSanPham", FormMethod.Post, new { id = "myForm" }))
                     {
-                        new SelectListItem { Text = "Theo tên Z - A", Value = "ma_desc" },
-                        new SelectListItem { Text = "Giá tăng dần", Value = "price" },
-                        new SelectListItem { Text = "Giá giảm dần", Value = "price_desc" }
-                    }, new { onchange = "submitForm();" })
 
-                }
+                        @Html.DropDownList("sortOrder", new List<SelectListItem>
+                        {
+                            new SelectListItem { Text = "Theo tên A - Z", Value = "" },
+                            new SelectListItem { Text = "Theo tên Z - A", Value = "ma_desc" },
+                            new SelectListItem { Text = "Giá tăng dần", Value = "price" },
+                            new SelectListItem { Text = "Giá giảm dần", Value = "price_desc" }
+                        }, new { onchange = "submitForm();" })
 
+                    }
 
-            </div>
+                <p>
+
+                </p>
+                </div>
             <div class="listing-cate">
                 @foreach (var item in Model)
                 {
-                    <div class="listing-cate-item" style="background: ; margin-bottom: 0px;">
+                    <div class="listing-cate-item" style="background: white; margin-bottom: 0px;">
                         <a href="">
                             <label for="">Mới</label>
                             <div class="item-img">
