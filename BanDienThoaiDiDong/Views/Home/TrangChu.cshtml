@@ -41,15 +41,17 @@
 
             </p>
             <span>
-                Tìm kiếm: 
+                Tìm kiếm:
             </span>
             <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
-                 @Html.TextBox("SearchString", "", new { @class = "form-control" })
-                <input type="submit" class="btn btn-secondary" value="Search" />
+                @Html.TextBox("SearchString", "", new { @class = "form-control" })
+                <button type="submit" class="btn btn-secondary" value="Search">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
         }
     </div>
-    <div class="policy">
+    <div class="policy" style="color: black;">
         <ul class="pr-policy">
             <li>
                 <div class="policy-item" style="color: black;">

@@ -8,6 +8,7 @@
 
 <script src="~/Content/jsSlide.js"></script>
 <script src="~/Content/js.js"></script>
+<script src="https://kit.fontawesome.com/ef3275e9a2.js" crossorigin="anonymous"></script>
 <link href="~/Content/dssp.css" rel="stylesheet" />
 <div style="background: gainsboro;">
     <section>
@@ -48,7 +49,9 @@
                     </p>
                     <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
                         @Html.TextBox("SearchString", "", new { @class = "form-control" })
-                        <input type="submit" class="btn btn-warning" value="Search" />
+                        <button type="submit" class="btn btn-secondary" value="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 }
                 <div>

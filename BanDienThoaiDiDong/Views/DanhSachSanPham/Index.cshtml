@@ -10,6 +10,7 @@
 <div style="background: gainsboro;">
     <script src="~/Content/js.js"></script>
     <script src="~/Content/jsSlide.js"></script>
+    <script src="https://kit.fontawesome.com/ef3275e9a2.js" crossorigin="anonymous"></script>
     <link href="~/Content/dssp.css" rel="stylesheet" />
     <section>
         <img class="logo" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Category/42/WiPhone-120x35.png" alt="">
@@ -50,7 +51,9 @@
                     </p>
                     <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
                         @Html.TextBox("SearchString", "", new { @class = "form-control" })
-                        <input type="submit" class="btn btn-warning" value="Search" />
+                        <button type="submit" class="btn btn-secondary" value="Search">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 }
                 <div>
@@ -58,29 +61,28 @@
 
                     </p>
                 </div>
-                 
-                
+
+
                 <!-- Đoạn cần thêm -->
-                
-                    <!-- Kết thúc -->
-                    Sắp xếp: 
-                    @using (Html.BeginForm("Index", "DanhSachSanPham", FormMethod.Post, new { id = "myForm" }))
+                <!-- Kết thúc -->
+                Sắp xếp:
+                @using (Html.BeginForm("Index", "DanhSachSanPham", FormMethod.Post, new { id = "myForm" }))
+                {
+
+                    @Html.DropDownList("sortOrder", new List<SelectListItem>
                     {
+                        new SelectListItem { Text = "Theo tên A - Z", Value = "" },
+                        new SelectListItem { Text = "Theo tên Z - A", Value = "ma_desc" },
+                        new SelectListItem { Text = "Giá tăng dần", Value = "price" },
+                        new SelectListItem { Text = "Giá giảm dần", Value = "price_desc" }
+                    }, new { onchange = "submitForm();" })
 
-                        @Html.DropDownList("sortOrder", new List<SelectListItem>
-                        {
-                            new SelectListItem { Text = "Theo tên A - Z", Value = "" },
-                            new SelectListItem { Text = "Theo tên Z - A", Value = "ma_desc" },
-                            new SelectListItem { Text = "Giá tăng dần", Value = "price" },
-                            new SelectListItem { Text = "Giá giảm dần", Value = "price_desc" }
-                        }, new { onchange = "submitForm();" })
-
-                    }
+                }
 
                 <p>
 
                 </p>
-                </div>
+            </div>
             <div class="listing-cate">
                 @foreach (var item in Model)
                 {
