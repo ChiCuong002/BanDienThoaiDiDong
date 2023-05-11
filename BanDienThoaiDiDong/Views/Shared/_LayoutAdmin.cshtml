@@ -1,4 +1,10 @@
-﻿
+﻿@model IEnumerable<BanDienThoaiDiDong.Models.SANPHAM>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -401,7 +407,7 @@
     <div>
         @RenderBody()
     </div>
-
+     
 </body>
 
 </html>

@@ -2,264 +2,124 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+     
 }
+ 
+    <div id="main" class="content">
+        <div class="tb">
+            <div class="add-product">
+                <button>
+                    @Html.ActionLink("Thêm", "Create")
+                </button>
+            </div>
+            <h3>
+                Danh sách sản phẩm
+            </h3>
+            <div class="tb-product">
+                <div class="tb-product-item header">
+                    <div class="tb-product-name">
+                        <span>Tên</span>
+                    </div>
+                    <div class="tb-product-des">
+                        <span>Mô tả</span>
+                    </div>
+                    <div class="tb-product-img">
+                        <span>Ảnh</span>
+                    </div>
+                    <div class="tb-product-status">
+                        <span>Trạng thái</span>
+                    </div>
+                    <div class="tb-product-type">
+                        <span>Loại</span>
+                    </div>
+                    <div class="tb-product-acition">
 
-<h2></h2>
+                    </div>
+                </div>
+                @foreach (var item in Model)
+                {
+                    <!-- Từng sản phẩm -->
+                    <div class="tb-product-item">
+                        <div class="tb-product-name">
+                            <span>@Html.DisplayFor(modelItem => item.TenSP)</span>
+                        </div>
+                        <div class="tb-product-des">
+                            <span>@Html.DisplayFor(modelItem => item.MoTa)</span>
+                        </div>
+                        <div class="tb-product-img">
+                            <img src="~/Images/@item.Hinh" alt="">
+                        </div>
+                        <div class="tb-product-status">
+                            <span>@Html.DisplayFor(modelItem => item.Gia)</span>
+                        </div>
+                        <div class="tb-product-type">
+                            <span>@Html.DisplayFor(modelItem => item.LOAISANPHAM.TenLoai)</span>
+                        </div>
+                        <div class="">
+                            <i class="fas fa-edit">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.MaSP }) |
+                            </i>
+                            <i class="fas fa-plus">
+                                @Html.ActionLink("Details", "Details", new { id = item.MaSP }) |
+                            </i>
+                            <i class="fas fa-trash-alt">
+                                @Html.ActionLink("Delete", "Delete", new { id = item.MaSP })
+                            </i>
+                        </div>
+                    </div>
+                    <!-- Kết thúc từng sản phẩm -->
+                }
+                </div>
+        </div>
+        <script>
+            const btnElm = document.getElementById("show");
+            let isRotated = false;
+            let isExpanded = false;
+            btnElm.addEventListener("click", (e) => {
+                setTimeout(() => {
+                    document.querySelectorAll("body > aside > div.sidebar-content > a > span").forEach((item) => {
+                        item.classList.toggle('none');
+                    })
+                }, 300);
+                document.getElementsByTagName("header")[0].classList.toggle("togger");
+                document.getElementById("main").classList.toggle("togger");
+                document.getElementsByTagName("aside")[0].classList.toggle("aside-togger");
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-@*<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TenSP)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MoTa)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Hinh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HienThi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LOAISANPHAM.TenLoai)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenSP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTa)
-            </td>
-            <td>
-                <img src="~/Images/@item.Hinh" style="width:200px; height:200px" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HienThi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LOAISANPHAM.TenLoai)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.MaSP }) |
-                @Html.ActionLink("Details", "Details", new { id = item.MaSP }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.MaSP })
-            </td>
-        </tr>
-    }
-
-</table>*@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
-    <style>
-        .table {
-            border-spacing: 0;
-            border: 1px solid #e9ecef;
-            width: 100%;
-            border-collapse: collapse;
-            box-sizing: border-box;
-            font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
-            font-size: .88rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: #495057;
-            text-align: left;
-        }
-
-        tbody tr:nth-child(odd) {
-            background-color: rgba(0,0,0,.03);
-        }
-
-        tbody tr:hover {
-            background-color: rgba(99, 184, 255,0.1);
-        }
-
-        thead {
-            border-bottom: 3px solid #e9ecef;
-        }
-
-        td, th {
-            
-            padding: 5px 10px;
-            border: 1px solid #e9ecef;
-            
-        }
-        th {
-            text-align: center;
-        }
-        tr td:last-child{
-            width: 250px;
-        }
-
-            td i {
-                font-size: 1rem;
-                margin-right: 10px;
-                cursor: pointer;
-                opacity: 0.7;
-                box-sizing: border-box;
-            }
-
-                td i:hover {
-                    color: rgba(99, 184, 255,0.2);
-                    ;
-                    scale: 1.5;
+                if (isRotated) {
+                    btnElm.style.transform = 'rotate(0deg)';
+                    isRotated = false;
+                } else {
+                    btnElm.style.transform = 'rotate(-180deg)';
+                    isRotated = true;
                 }
 
-            td img {
-                display: inline-block;
-                height: 50px;
-            }
-
-        td {
-            height: 50px;
-        }
-        .show-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 100;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .bg {
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            z-index: 0;
-            background-color: rgba(0,0,0,0.5);
-        }
-
-        #showImg {
-            display: inline-block;
-            width: 50%;
-            z-index: 1000;
-        }
-
-
-        .show-image div {
-            display: flex;
-            flex-direction: column;
-            align-items: right;
-            z-index: 1;
-        }
-
-        .unSelect {
-            user-select: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="show-image">
-        <div class="bg">
-
-        </div>
-
-        <img id="showImg" src="" alt="">
-
-
-    </div>
-    <table class="table">
-        <thead>
-        <th>
-            <label>
-                Tên Sản Phẩm
-            </label>
-            @*@Html.DisplayNameFor(model => model.TenSP)*@
-        </th>
-        <th>
-                Mô Tả
-            @*@Html.DisplayNameFor(model => model.MoTa)*@
-        </th>
-        <th>
-                Hình
-            @*@Html.DisplayNameFor(model => model.Hinh)*@
-        </th>
-        <th>
-            Giá
-            @*@Html.DisplayNameFor(model => model.HienThi)*@
-        </th>
-        <th>
-            Tên Loại
-            @*@Html.DisplayNameFor(model => model.LOAISANPHAM.TenLoai)*@
-        </th>
-        <th></th>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TenSP)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MoTa)
-                    </td>
-                    <td>
-                        <img src="~/Images/@item.Hinh" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Gia)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LOAISANPHAM.TenLoai)
-                    </td>
-                    <td>
-
-
-
-                        <i class="fas fa-edit">
-                            @Html.ActionLink("Edit", "Edit", new { id = item.MaSP }) |
-                        </i>
-                        <i class="fas fa-plus">
-                            @Html.ActionLink("Details", "Details", new { id = item.MaSP }) |
-                        </i>
-                        <i class="fas fa-trash-alt">
-                            @Html.ActionLink("Delete", "Delete", new { id = item.MaSP })
-                        </i>
-                    </td>
-                </tr>
-            }
-        </tbody>
-
-    </table>
-    <script>
-        document.querySelectorAll("td>img").forEach(item => {
-            item.addEventListener('click', (e) => {
-                var bg = document.getElementsByClassName('show-image')[0];
-                var imgElm = document.getElementById('showImg');
-                var bgElm = document.getElementsByClassName('bg')[0];
-                var tableEml = document.getElementsByClassName('table')[0];
-                tableEml.classList.toggle('unSelect');
-                bgElm.addEventListener('click', (e) => {
-                    bg.style.display = "none";
-                    tableEml.classList.toggle('unSelect');
-                });
-
-                imgElm.src = e.target.src
-                bg.style.display = "flex";
+                if (isExpanded) {
+                    box.style.width = '5.2rem';
+                    isExpanded = false;
+                } else {
+                    box.style.width = '16rem';
+                    isExpanded = true;
+                }
 
             });
-        });
-    </script>
-</body>
-</html>
+            var navElm = document.getElementsByClassName('nav')[0];
+            navElm.addEventListener('click', (e) => {
+
+                document.getElementsByClassName('nav-content')[0].classList.remove('none');
+
+                document.addEventListener('click', function (event) {
+                    const outsideClick = !document.getElementsByClassName('nav')[0].contains(event.target);
+                    if (outsideClick) {
+                        document.getElementsByClassName('nav-content')[0].classList.add('none');
+                    }
+                });
+            });
+        </script>
+
+         
+
+
+ 
+ 
+ 
