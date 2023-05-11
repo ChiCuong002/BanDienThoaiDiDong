@@ -2,9 +2,84 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/NVQLDonHang/Views/Shared/_LayoutTrangChu.cshtml";
+    <link rel="stylesheet" href="~/Content/DetailsStyle.css" />
 }
 
-<div class="card" style="margin: 20px auto; width: 70%;">
+<div id="main" class="content" style="margin-top: 70px;">
+    <div class="container-fluid">
+        <div class="container">
+
+            @*<div class="d-flex justify-content-between align-items-center py-3">
+                <h2 class="h5 mb-0"><a href="#" class="text-muted"></a>Mã hóa đơn @ViewBag.mahd</h2>
+            </div>*@
+
+            <div class="row">
+                <div class="col-lg-8" style="margin: 0px auto;">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="mb-3 d-flex justify-content-between">
+                                <div>
+                                    <span class="badge rounded-pill bg-info">CHI TIẾT ĐƠN HÀNG</span>
+                                    <span class="me-3">Mã đơn hàng @ViewBag.mahd</span>
+                                    <span class="me-3">@ViewBag.ngaytao</span>
+                                </div>
+                            </div>
+                            <table class="table table-borderless">
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex mb-2">
+                                                    <div class="flex-shrink-0">
+                                                        <img src="@item.SANPHAM.Hinh" width="100" height="100" class="img-fluid" />
+                                                    </div>
+                                                    <div class="flex-lg-grow-1 ms-3">
+                                                        <h6 class="small mb-0"><a href="#" class="text-reset" style="font-size: 20px">@item.SANPHAM.TenSP</a></h6>
+                                                        <span class="small">Color: </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>@item.SoLuongDatHang</td>
+                                            <td class="text-end">@item.DonGia</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr class="fw-bold">
+                                        <td colspan="2">
+                                            <p>TOTAL <span class="badge bg-success rounded-pill">PAID</span> </p>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h3 class="h6" style="text-align:center">ĐỊA CHỈ ĐƠN HÀNG</h3>
+                                    <address>
+                                        <strong>@ViewBag.hoten</strong><br />
+                                        @ViewBag.diachi <br />
+                                        @ViewBag.dienthoai <br />
+                                        @ViewBag.trangthaidh
+                                    </address>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@*<div class="card" style="margin: 20px auto; width: 70%;">
     <div class="card-header">
         <h2 style="text-align:center">CHI TIẾT ĐƠN HÀNG</h2>
     </div>
@@ -98,7 +173,7 @@
             </a>
         </div>
     </div>
-</div>
+</div>*@
 
 @*<div style="margin: 20px auto; width:70%; text-align: right;">
     @Html.ActionLink("TRỞ LẠI", "DSDonHang")

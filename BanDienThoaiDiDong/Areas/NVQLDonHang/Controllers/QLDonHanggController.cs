@@ -13,21 +13,28 @@ namespace BanDienThoaiDiDong.Areas.NVQLDonHang.Controllers
     {
         DB_DiDongEntities database = new DB_DiDongEntities();
         // GET: NVQLDonHang/QLDonHangg
-        public ActionResult DSDonHang(string Searching, int? page)
+        public ActionResult DSDonHang(string sortOrder, int? page)
         {
-            var order = database.HDBANs.ToList();
-            if (!string.IsNullOrEmpty(Searching))
+            List<HDBAN> list;
+            switch (sortOrder)
             {
-                order = database.HDBANs.Where(n => n.KHACHHANG.SoDienThoai.Contains(Searching)).ToList();
-            }
-            else
-            {
-                order = database.HDBANs.ToList();
+                case "danger":
+                    list = database.HDBANs.Where(s => s.TrangThaiDH.Equals("Chờ xác nhận")).ToList();
+                    break;
+                case "info":
+                    list = database.HDBANs.Where(s => s.TrangThaiDH.Equals("Đang giao hàng")).ToList();
+                    break;
+                case "success":
+                    list = database.HDBANs.Where(s => s.TrangThaiDH.Equals("Đã giao hàng")).ToList();
+                    break;
+                default:
+                    list = database.HDBANs.ToList();
+                    break;
             }
 
             int pageSize = 10;
             int pageNum = (page ?? 1);
-            return View(order.ToPagedList(pageNum, pageSize));
+            return View(list.ToPagedList(pageNum, pageSize));
         }
 
         public ActionResult Details(string id)
@@ -55,7 +62,7 @@ namespace BanDienThoaiDiDong.Areas.NVQLDonHang.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, HDBAN ttdonhang, int ttdh)
+        public ActionResult Edit(string id, HDBAN ttdonhang, int ttdh)
         {
             string[] chon = { "Đang giao hàng", "Đã giao hàng" };
             string trangthai = chon[ttdh];
@@ -86,8 +93,14 @@ namespace BanDienThoaiDiDong.Areas.NVQLDonHang.Controllers
             try
             {
                 var order = database.HDBANs.Where(c => c.MaHD == id).FirstOrDefault();
-               
-                database.Entry(order).State = System.Data.Entity.EntityState.Modified;
+                database.HDBANs.Remove(order);
+                //var chitiet = database.CHITIETHDBANs.Where(c => c.ID_HDBAN == id).ToList();
+
+                //foreach (var remove in chitiet)
+                //{
+                //    database.CHITIETHDBANs.Remove(remove);
+                //}
+                //database.Entry(order).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
                 return RedirectToAction("DSDonHang");
             }

@@ -1,113 +1,447 @@
-﻿<!DOCTYPE html>
-
-<html>
+﻿
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
-    <link href="~/Content/Site.css" rel="stylesheet" />
+    <title>QuanLyDonHang</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f6f5fb;
+        }
+
+        aside {
+            width: 16rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            position: fixed;
+            top: 1px;
+            bottom: 1px;
+            left: 0;
+            z-index: 3;
+            border-top-right-radius: 35px;
+            border-bottom-right-radius: 35px;
+            transition: width 0.5s;
+            padding: 20px 0px;
+        }
+
+
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        header {
+            background-image: linear-gradient(to left,#F35C17,#FF920B);
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 2;
+            padding-left: calc(16rem + 48px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 48px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: #fff;
+            font-weight: 300;
+        }
+
+        .togger {
+            padding-left: calc(5.2rem + 48px);
+        }
+
+        .aside-togger {
+            width: 85px;
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 999px;
+            background-color: hsla(0,0%,100%,.15);
+            padding: 4px;
+        }
+
+            .nav-header img {
+                display: inline-block;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                border: 4px solid rgba(225,225,255,.37);
+                margin-right: 10px;
+            }
+
+            .nav-header i {
+                display: block;
+                margin-top: -5px;
+                color: white;
+                margin-left: 10px;
+                margin-right: 20px;
+            }
+
+        .nav {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-content {
+            display: block;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 12px 20px 0 rgba(0,0,0,.08);
+            border-radius: 6px;
+            z-index: 2;
+            padding: 5px 0px;
+            list-style: none;
+            color: #929baa;
+            right: 0;
+            margin-top: 5px;
+            min-width: 160px;
+        }
+
+            .nav-content li {
+                padding: 6px 16px;
+            }
+
+                .nav-content li:hover {
+                    background-color: #f6f7f9;
+                }
+
+        .nav-header:hover .nav-content {
+            display: block;
+        }
+
+        #show {
+            background-color: #FF7B1D;
+            border-radius: 100%;
+            position: absolute;
+            top: 110px;
+            right: -12px;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+
+        aside > img {
+            display: inline-block;
+            height: 50px;
+            width: 150px;
+            max-width: 200px;
+        }
+
+        .sidebar-logo {
+            padding-top: 20px;
+            cursor: pointer;
+        }
+
+        .sidebar-content {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            margin-top: 50px;
+            padding-right: 8px;
+        }
+
+            .sidebar-content .item {
+                width: 100%;
+                border-top-right-radius: 50px;
+                border-bottom-right-radius: 50px;
+                padding: 8px 16px 8px 24px;
+                cursor: pointer;
+                color: #64728c;
+                display: flex;
+                justify-content: center;
+                text-decoration: none;
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                font-size: 1rem;
+                font-weight: 500;
+                font-family: Nunito Sans;
+                overflow: hidden;
+            }
+
+                .sidebar-content .item img {
+                    display: inline-block;
+                    width: 26px;
+                    height: 26px;
+                    margin-right: 10px;
+                }
+
+                .sidebar-content .item span {
+                    text-align: left;
+                }
+
+                .sidebar-content .item:hover {
+                    background-color: rgba(255, 123, 29, 0.1);
+                }
+
+        .active {
+            background-image: linear-gradient(to left,#F35C17,#FF920B);
+            color: #fff;
+        }
+
+            .active > span {
+                color: #fff;
+            }
+
+        .sidebar-content .item i {
+            color: black;
+        }
+
+        .none {
+            display: none;
+        }
+
+        .content {
+            padding-top: 4rem;
+            padding-left: calc(16rem + 48px);
+            padding-right: 48px;
+            color: #64728c;
+        }
+
+            .content > .tb {
+                margin-top: 5rem;
+                background-color: #fff;
+                border-radius: 1.2rem;
+            }
+    </style>
 </head>
 <body>
-    <header>
-        <div>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">NHẤT NGHỆ</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">About us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Contact us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">Feedback</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">FAQs</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    My Accounts
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="#">Login</a></li>
-                                    <li><a class="dropdown-item" href="#">Forgot password</a></li>
-                                    <li><a class="dropdown-item" href="#">Register</a></li>
-                                    <li><hr /></li>
-                                    <li><a class="dropdown-item" href="#">Logoff</a></li>
-                                    <li><a class="dropdown-item" href="#">Change Password</a></li>
-                                    <li><a class="dropdown-item" href="#">Edit Profile</a></li>
-                                    <li><hr /></li>
-                                    <li><a class="dropdown-item" href="#">My orders</a></li>
-                                    <li><a class="dropdown-item" href="#">My favorite item</a></li>
-                                </ul>
-                            </li>
+    <div class="bg none">
 
-                        </ul>
-                        <ul class="navbar-nav ms-auto flex-nowrap">
-                            <li class="nav-item">
-                                <a class="nav-link me-2" href="/Home/Login">
-                                    <svg style="text-align:center" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
-                                        <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
-                                    </svg>
-                                    Login
-                                </a>
-                            </li>
-                            <li class="nav-item me-2">
-                                <a class="nav-link">
-                                    <svg style="text-align:center" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                                    </svg>Sign up
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-    <div>
-        @RenderBody()
     </div>
-    <footer>
-        <div style="background-color:#323232; color:white" class="row">
-            <div class="col-lg-3 col-md-6">
-                <p style="font-weight:bold">Tổng đài</p>
-                <p>Mua hàng: 1900.9696.42 (7:30 - 22:00)</p>
-                <p>CSKH: 1900.9696.42 (8:00 - 21:30)</p>
-                <p>Kỹ thuật: 1900.9696.42 (7:30 - 22:00)</p>
-            </div>
-            <div class="col-lg-3 col-md-6 ">
-                <p style="font-weight:bold">Hỗ trợ khách hàng</p>
-                <p>Mua hàng: 1900.9696.42 (7:30 - 22:00)</p>
-                <p>CSKH: 1900.9696.42 (8:00 - 21:30)</p>
-                <p>Kỹ thuật: 1900.9696.42 (7:30 - 22:00)</p>
-            </div>
-            <div class="col-lg-3 col-md-6 ">
-                <p style="font-weight:bold">Hỗ trợ khách hàng</p>
-                <p>Mua hàng: 1900.9696.42 (7:30 - 22:00)</p>
-                <p>CSKH: 1900.9696.42 (8:00 - 21:30)</p>
-                <p>Kỹ thuật: 1900.9696.42 (7:30 - 22:00)</p>
-            </div>
-            <div class="col-lg-3 col-md-6 ">
-                <p style="font-weight:bold">Trung tâm bảo hành</p>
-                <p>Mua hàng: 1900.9696.42 (7:30 - 22:00)</p>
-                <p>CSKH: 1900.9696.42 (8:00 - 21:30)</p>
-                <p>Kỹ thuật: 1900.9696.42 (7:30 - 22:00)</p>
-            </div>
+    <!-- sidebar -->
+    <aside>
+        <div class="sidebar-logo">
+
         </div>
-    </footer>
+        <i id="show" class="fas fa-chevron-right"></i>
+        <div class="sidebar-content">
+            <a class="item active">
+                <img src="https://img.icons8.com/external-justicon-lineal-justicon/64/null/external-phone-valentines-day-justicon-lineal-justicon.png" />
+                <span>Quản lý đơn hàng</span>
+            </a>
+            <a class="item">
+                <img src="https://img.icons8.com/external-justicon-lineal-justicon/64/null/external-phone-valentines-day-justicon-lineal-justicon.png" />
+                <span>Quản lý sản phẩm</span>
+            </a>
+            <a class="item">
+                <img src="https://img.icons8.com/external-justicon-lineal-justicon/64/null/external-phone-valentines-day-justicon-lineal-justicon.png" />
+                <span>Quản lý sản phẩm</span>
+            </a>
+
+        </div>
+    </aside>
+    <!-- End sidebar -->
+    <header class="">
+        <h2>Quản lý đơn hàng</h2>
+
+
+        <!-- Đăng nhập đăng xuất -->
+        <div class="nav">
+            <div class="nav-header">
+                <img src="https://img5.thuthuatphanmem.vn/uploads/2021/11/20/anh-cute-nguoi-that-dep-nhat_022606213.jpg" alt="">
+                <p>Tên tao nè</p>
+                <i class="fas fa-sort-down"></i>
+            </div>
+            <ul class="nav-content none">
+                <li>Tên tao</li>
+                <li>Đăng xuất</li>
+            </ul>
+        </div>
+        <!-- Kết thúc đăng nhập đăng xuất -->
+        </header>
+    @RenderBody()
 </body>
 </html>
+
+<script>
+    const btnElm = document.getElementById("show");
+    let isRotated = false;
+    let isExpanded = false;
+    btnElm.addEventListener("click", (e) => {
+        setTimeout(() => {
+            document.querySelectorAll("body > aside > div.sidebar-content > a > span").forEach((item) => {
+                item.classList.toggle('none');
+            })
+        }, 300);
+        document.getElementsByTagName("header")[0].classList.toggle("togger");
+        document.getElementById("main").classList.toggle("togger");
+        document.getElementsByTagName("aside")[0].classList.toggle("aside-togger");
+
+        if (isRotated) {
+            btnElm.style.transform = 'rotate(0deg)';
+            isRotated = false;
+        } else {
+            btnElm.style.transform = 'rotate(-180deg)';
+            isRotated = true;
+        }
+
+        if (isExpanded) {
+            box.style.width = '5.2rem';
+            isExpanded = false;
+        } else {
+            box.style.width = '16rem';
+            isExpanded = true;
+        }
+
+    });
+    var navElm = document.getElementsByClassName('nav')[0];
+    navElm.addEventListener('click', (e) => {
+
+        document.getElementsByClassName('nav-content')[0].classList.remove('none');
+
+        document.addEventListener('click', function (event) {
+            const outsideClick = !document.getElementsByClassName('nav')[0].contains(event.target);
+            if (outsideClick) {
+                document.getElementsByClassName('nav-content')[0].classList.add('none');
+            }
+        });
+    });
+</script>
+
+
+<!--
+<!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+        <link href="~/Content/Site.css" rel="stylesheet" />
+    </head>
+    <body>
+        <header>
+            <div>
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">NHẤT NGHỆ</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">About us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Contact us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">Feedback</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">FAQs</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        My Accounts
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <li><a class="dropdown-item" href="#">Login</a></li>
+                                        <li><a class="dropdown-item" href="#">Forgot password</a></li>
+                                        <li><a class="dropdown-item" href="#">Register</a></li>
+                                        <li><hr /></li>
+                                        <li><a class="dropdown-item" href="#">Logoff</a></li>
+                                        <li><a class="dropdown-item" href="#">Change Password</a></li>
+                                        <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+                                        <li><hr /></li>
+                                        <li><a class="dropdown-item" href="#">My orders</a></li>
+                                        <li><a class="dropdown-item" href="#">My favorite item</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                            <ul class="navbar-nav ms-auto flex-nowrap">
+                                <li class="nav-item">
+                                    <a class="nav-link me-2" href="/Home/Login">
+                                        <svg style="text-align:center" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+                                            <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                                        </svg>
+                                        Login
+                                    </a>
+                                </li>
+                                <li class="nav-item me-2">
+                                    <a class="nav-link">
+                                        <svg style="text-align:center" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                        </svg>Sign up
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <div>
+            
+        </div>
+        <footer>
+            <div style="background-color:#323232; color:white" class="row">
+                <div class="col-lg-3 col-md-6">
+                    <p style="font-weight:bold">Tổng đài</p>
+                    <p>Mua hàng: 1900.9696.42 (7:30 - 22:00)</p>
+                    <p>CSKH: 1900.9696.42 (8:00 - 21:30)</p>
+                    <p>Kỹ thuật: 1900.9696.42 (7:30 - 22:00)</p>
+                </div>
+                <div class="col-lg-3 col-md-6 ">
+                    <p style="font-weight:bold">Hỗ trợ khách hàng</p>
+                    <p>Mua hàng: 1900.9696.42 (7:30 - 22:00)</p>
+                    <p>CSKH: 1900.9696.42 (8:00 - 21:30)</p>
+                    <p>Kỹ thuật: 1900.9696.42 (7:30 - 22:00)</p>
+                </div>
+                <div class="col-lg-3 col-md-6 ">
+                    <p style="font-weight:bold">Hỗ trợ khách hàng</p>
+                    <p>Mua hàng: 1900.9696.42 (7:30 - 22:00)</p>
+                    <p>CSKH: 1900.9696.42 (8:00 - 21:30)</p>
+                    <p>Kỹ thuật: 1900.9696.42 (7:30 - 22:00)</p>
+                </div>
+                <div class="col-lg-3 col-md-6 ">
+                    <p style="font-weight:bold">Trung tâm bảo hành</p>
+                    <p>Mua hàng: 1900.9696.42 (7:30 - 22:00)</p>
+                    <p>CSKH: 1900.9696.42 (8:00 - 21:30)</p>
+                    <p>Kỹ thuật: 1900.9696.42 (7:30 - 22:00)</p>
+                </div>
+            </div>
+        </footer>
+    </body>
+    </html>
+    -->

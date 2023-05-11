@@ -5,22 +5,17 @@
 @{
     ViewBag.Title = "DSDonHang";
     Layout = "~/Areas/NVQLDonHang/Views/Shared/_LayoutTrangChu.cshtml";
+    <link rel="stylesheet" href="~/Content/IndexStyle.css" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 }
 
+<!--
 <div style="margin: 20px auto; width: 70%;">
     <div>
         <h2 style="text-align: center">DANH SÁCH ĐƠN ĐẶT HÀNG</h2>
     </div>
 
-    <div style="text-align: center">
-        @using (Html.BeginForm())
-        {
-            <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
-                @Html.TextBox("Searching", "", new { @class = "form-control" })
-                <input type="submit" class="btn btn-warning" value="Search" />
-            </div>
-        }
-    </div>
+
 
     <div>
         <p>
@@ -100,3 +95,134 @@
         }
     </style>
 </div>
+    -->
+
+
+<div id="main" class="content">
+    <div class="tb">
+        <div class="add-product">
+
+            <h3>
+                Danh sách đơn hàng
+            </h3>
+        </div>
+        <br />
+
+
+        <div class="table-filter" style="text-align: right; margin-right: 20px;">
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-9">
+                    <div class="filter-group">
+                        <label>Trạng thái đơn hàng</label>
+                        @using (Html.BeginForm("DSDonHang", "QLDonHangg", FormMethod.Post, new { id = "myForm" }))
+                        {
+                            @Html.DropDownList("sortOrder", new List<SelectListItem>
+                            {
+                                new SelectListItem { Text = "Chờ xác nhận", Value = "danger" },
+                                new SelectListItem { Text = "Đang giao hàng", Value = "info" },
+                                new SelectListItem { Text = "Đã giao hàng", Value = "success" },
+                            }, new { onchange = "submitForm();" })
+                        }
+                    </div>
+                    <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="tb-order">
+            <div class="tb-order-item header">
+                <div class="tb-order-stt">
+                    <span>STT</span>
+                </div>
+                <div class="tb-order-madh">
+                    <span>Mã đơn hàng</span>
+                </div>
+                <div class="tb-order-tenkh">
+                    <span>Tên khách hàng</span>
+                </div>
+                <div class="tb-order-sdt">
+                    <span>Số điện thoại</span>
+                </div>
+                <div class="tb-order-tien">
+                    <span>Tiền</span>
+                </div>
+                <div class="tb-order-thanhtoan">
+                    <span>Thanh toán</span>
+                </div>
+                <div class="tb-order-ngaytao">
+                    <span>Ngày tạo</span>
+                </div>
+                <div class="tb-order-trangthai">
+                    <span>Trạng thái</span>
+                </div>
+                <div class="tb-order-acition">
+                    <span></span>
+                </div>
+            </div>
+
+            <!-- Từng sản phẩm -->
+            @if (Model != null && Model.Any())
+            {
+                var i = 0;
+                foreach (var item in Model)
+                {
+                    <div class="tb-order-item">
+                        <div class="tb-order-stt">
+                            <span>@(i+1)</span>
+                        </div>
+                        <div class="tb-order-madh">
+                            <span>@Html.DisplayFor(modelItem => item.MaHD)</span>
+                        </div>
+                        <div class="tb-order-tenkh">
+                            <span>@Html.DisplayFor(modelItem => item.KHACHHANG.HoTen)</span>
+                        </div>
+                        <div class="tb-order-sdt">
+                            <span>@Html.DisplayFor(modelItem => item.KHACHHANG.SoDienThoai)</span>
+                        </div>
+                        <div class="tb-order-tien">
+                            <span>@Html.DisplayFor(modelItem => item.TongGiaTri)</span>
+                        </div>
+                        <div class="tb-order-thanhtoan">
+                            <span>@Html.DisplayFor(modelItem => item.TrangThaiTT)</span>
+                        </div>
+                        <div class="tb-order-ngaytao">
+                            <span>@Html.DisplayFor(modelItem => item.NgayDatHang)</span>
+                        </div>
+                        <div class="tb-order-trangthai">
+                            <span>@Html.DisplayFor(modelItem => item.TrangThaiDH)</span>
+                        </div>
+                        <div>
+                            <i class="far fa-eye">@Html.ActionLink("Chi tiết", "Details", new { id = item.MaHD }) |</i>
+                            <i class="far fa-edit">@Html.ActionLink("Cập nhật", "Edit", new { id = item.MaHD }) |</i>
+                            <i class="far fa-trash-alt">@Html.ActionLink("Xóa", "Delete", new { id = item.MaHD })</i>
+                        </div>
+                    </div>
+                }
+            }
+
+            <br />
+            <div style="text-align: center">
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+                <div class="MenuTrang">
+                    @Html.PagedListPager(Model, page => Url.Action("DSDonHang", new { page }))
+                </div>
+            </div>
+            <style>
+                .MenuTrang li {
+                    display: inline;
+                }
+            </style>
+
+            <!-- Kết thúc từng sản phẩm -->
+        </div>
+    </div>
+
+<script>
+    function submitForm() {
+        document.getElementById("myForm").submit();
+    }
+</script>
+
