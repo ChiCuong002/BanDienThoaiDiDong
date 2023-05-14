@@ -387,11 +387,14 @@
             <div class="nav">
                 <div class="nav-header">
                     <img src="https://img5.thuthuatphanmem.vn/uploads/2021/11/20/anh-cute-nguoi-that-dep-nhat_022606213.jpg" alt="">
-                    <p>@Session["Hoten"]</p>
+                     
                     <i class="fas fa-sort-down"></i>
                 </div>
                 <ul class="nav-content none">
-                    <li>@Session["Hoten"]</li>
+                     
+                    <li class="active" style="color: white;">
+                        <a href="/Admin/QLUser/Profile" style="color: white;">@Session["Hoten"]</a>
+                    </li>
                     <li class="active" style="color: white;">
                         <a href="/Admin/QLUser/DangXuat" style="color: white;">Đăng xuất</a>
                     </li>
