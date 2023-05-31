@@ -1,0 +1,158 @@
+﻿@model IEnumerable<BanDienThoaiDiDong.Models.SANPHAM>
+@{
+    ViewBag.Title = "TrangChu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<BanDienThoaiDiDong.Models.LOAISANPHAM> listHang = ViewBag.dsHang;
+}
+<link href="~/Content/style.css" rel="stylesheet" />
+<link href="~/Content/head.css" rel="stylesheet" />
+<script src="https://kit.fontawesome.com/ef3275e9a2.js" crossorigin="anonymous"></script>
+<script src="~/Scripts/script.js"></script>
+<div class="trangchu-background" style="background: gainsboro;">
+    <div class="slider">
+        <!--Hình 1-->
+        <div class="myslide fadeaway" style="display:block">
+            <div>
+                <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2023/03/banner/iPad10-2880-800-1920x533.png" style="width:100%; height:450px" />
+            </div>
+        </div>
+        <!--Hình 2-->
+        <div class="myslide fadeaway">
+            <div>
+                <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2023/02/banner/Mac-2880-800-1920x533-1.png" style="width:100%; height:450px" />
+            </div>
+        </div>
+        <!--Hình 3-->
+        <div class="myslide fadeaway">
+            <div>
+                <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1920x533/https://cdn.tgdd.vn/2023/03/banner/iPad10-2880-800-1920x533.png" style="width:100%; height:450px" />
+            </div>
+        </div>
+        <!--2 nút chuy?n slide-->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <div style="text-align:right;">
+        @using (Html.BeginForm())
+        {
+            <p>
+
+            </p>
+            <span>
+                Tìm kiếm:
+            </span>
+            <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
+                @Html.TextBox("SearchString", "", new { @class = "form-control" })
+                <input type="submit" class="btn btn-secondary" value="Search" />
+            </div>
+        }
+    </div>
+    <div class="policy">
+        <h2 style="text-align: center; margin: 35px 0px">
+            DỊCH VỤ
+        </h2>
+        <ul class="pr-policy">
+            <li>
+                <div class="policy-item" style="color: black;">
+                    <i class="icon fas fa-check-circle "></i><span>Mẫu mã đa dạng,<br> chính hãng</span>
+                </div>
+            </li>
+            <li>
+                <div class="policy-item" style="color: black;">
+                    <i class="icon fas fa-truck "></i><span>Giao hàng toàn quốc</span>
+                </div>
+            </li>
+            <li>
+                <div class="policy-item" style="color: black;">
+                    <i class="icon fas fa-user-shield "></i><span>Bảo hành có cam kết<br> tới 12 tháng</span>
+                </div>
+            </li>
+            <li>
+                <div class="policy-item" style="color: black;">
+                    <i class="icon fas fa-undo-alt "></i><span>Có thể đổi trả<br> trong vòng 30 ngày</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h2 style="text-align: center; margin: 35px 0px">
+            THƯƠNG HIỆU
+        </h2>
+        <div class="choose-cate">
+
+
+            <div class="cate-column" style="background-color: white; color: black;">
+                <a href="#">
+                    <div class="img-catesp cateiphone">
+                        <img width="102" height="112" src="https://cdn2.cellphones.com.vn/x358,webp,q100/media/catalog/product/3/_/3_225.jpg">
+                    </div>
+                    <span style="color: black;">iPhone</span>
+                </a>
+            </div>
+
+            <div class="cate-column" style="background-color: white; color: black;">
+                <a href="#">
+                    <div class="img-catesp cateiphone">
+                        <img width="102" height="112" src="https://cdn2.cellphones.com.vn/x358,webp,q100/media/catalog/product/s/m/sm-a346_galaxy_a34_5g_awesome_silver_front.png">
+                    </div>
+                    <span style="color: black;">SamSung</span>
+                </a>
+            </div>
+
+            <div class="cate-column" style="background-color: white; color: black;">
+                <a href="#">
+                    <div class="img-catesp cateiphone">
+                        <img width="102" height="112" src="https://cdn2.cellphones.com.vn/x358,webp,q100/media/catalog/product/o/p/oppo-reno8t-vang1-thumb-600x600.jpg">
+                    </div>
+                    <span style="color: black;">Oppo</span>
+                </a>
+            </div>
+
+            <div class="cate-column" style="background-color: white; color: black;">
+                <a href="#">
+                    <div class="img-catesp cateiphone">
+                        <img width="102" height="112" src="https://cdn2.cellphones.com.vn/x358,webp,q100/media/catalog/product/g/t/gtt7766.jpg">
+                    </div>
+                    <span style="color: black;">Xiaomi</span>
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+    <!--product slide-->
+    <h2 style="text-align: center; margin: 35px 0px">
+        SẢN PHẨM TIÊU BIỂU
+    </h2>
+    <div class="listing-cate">
+        @foreach (var item in Model)
+        {
+
+            <div class="listing-cate-item" style="background-color: white;">
+                <a href="">
+                    <label for="">Mới</label>
+
+                    <div class="item-img">
+                        <a href="@Url.Action("Details","DetailsProduct",new {id = item.MaSP})">
+                            <img src="~/Images/@item.Hinh" alt="">
+                        </a>
+
+                    </div>
+
+                    <h3 style="color: black">@item.TenSP</h3>
+                    <p style="color: black">
+                        @{
+                            double price = (double)item.Gia;
+                        }
+                        @price.ToString("N0") VND
+                    </p>
+
+                </a>
+            </div>
+
+        }
+    </div>
+    <br />
+</div>
+
+

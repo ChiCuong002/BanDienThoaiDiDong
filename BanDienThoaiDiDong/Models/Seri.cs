@@ -12,14 +12,9 @@ namespace BanDienThoaiDiDong.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AdminUser
+    public partial class Seri
     {
-        public int ID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public Nullable<int> RoleUser { get; set; }
-        public Nullable<bool> TrangThai { get; set; }
-    
-        public virtual Role Role { get; set; }
+        public string SeriMay { get; set; }
+        public string TenSeriMay { get; set; }
     }
 }

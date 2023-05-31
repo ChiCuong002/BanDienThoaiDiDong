@@ -1,0 +1,201 @@
+﻿
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background: #DBDFEA;
+}
+
+.container {
+    border-radius: 12px;
+    margin-top: 5%;
+    margin-bottom:5%;
+    background: white;
+}
+
+.left, .right {
+    width: 50%;
+    padding: 30px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex1 {
+    display: flex;
+}
+
+.main_image {
+    width: auto;
+    height: auto;
+}
+
+    .main_image img {
+        width: 100%;
+        height: auto;
+        max-width: 620px;
+        background-color: #DDDDDD;
+        border-radius: 19px;
+    }
+
+.option img {
+    width: 75px;
+    height: 75px;
+    padding: 10px;
+}
+
+.right {
+    padding: 50px 100px 50px 50px;
+}
+
+h3 {
+    color: #af827d;
+    margin: 20px 0 20px 0;
+    font-size: 25px;
+}
+
+h5,
+p,
+small {
+    color: #837D7C;
+}
+
+p {
+    margin: 20px 0 50px 0;
+    line-height: 25px;
+}
+
+h5 {
+    font-size: 15px;
+}
+
+label,
+.add span,
+.color input {
+    width: 25px;
+    height: 25px;
+    background: #000;
+    border-radius: 50%;
+    margin: 20px 10px 20px 0;
+}
+
+.color span:nth-child(2) {
+    background: #EDEDED;
+}
+
+.color span:nth-child(3) {
+    background: #D5D6D8;
+}
+
+.color span:nth-child(4) {
+    background: #EFE0DE;
+}
+
+.color span:nth-child(5) {
+    background: #AB8ED1;
+}
+
+.color span:nth-child(6) {
+    background: #F04D44;
+}
+
+.add label,
+.add span {
+    background: none;
+    border: 1px solid #C1908B;
+    color: #C1908B;
+    text-align: center;
+    line-height: 25px;
+}
+
+.add label {
+    padding: 10px 30px 0 20px;
+    border-radius: 50px;
+    line-height: 0;
+}
+
+.myBtn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background: steelblue;
+    color: white;
+    margin-top: 5%;
+    border-radius: 30px;
+}
+
+@media only screen and (max-width:768px) {
+    .container {
+        max-width: 90%;
+        margin: auto;
+        height: auto;
+    }
+
+    .left, .right {
+        width: 100%;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width:511px) {
+    .container {
+        max-width: 100%;
+        height: auto;
+        padding: 10px;
+    }
+
+    .left, .right {
+        padding: 0;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .option {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+.mau {
+    height: 36px;
+    width: 36px;
+    margin-left: 0.9em;
+    border-radius: 18px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+
+.capa {
+    height: 40px;
+    width: 60px;
+    margin-left: 0.9em;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #DDDDDD;
+}
+
+.ship-info {
+    width: 100%;
+    border-radius: 18px;
+    border: 1.2px solid #DDDDDD;
+    padding: 10px 12px;
+    margin: 12px 0px;
+}

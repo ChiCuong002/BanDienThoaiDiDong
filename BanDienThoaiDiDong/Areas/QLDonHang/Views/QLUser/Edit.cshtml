@@ -1,0 +1,42 @@
+﻿@model BanDienThoaiDiDong.Models.NHANVIEN
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+
+<style>
+    .center {
+        border-radius: 12px;
+        padding: 24px;
+        background-color: white;
+        width: 80%;
+        margin: 0 auto;
+    }
+</style>
+<form action="/QLDonHang/QLUser/Edit" method="post" class="center">
+    <h2>Cập nhật thông tin cá nhân</h2>
+    <hr />
+    @Html.HiddenFor(model => model.MaNV)
+    @Html.HiddenFor(model => model.Roles)
+    @Html.HiddenFor(model => model.UserName)
+    @Html.HiddenFor(model => model.MatKhau)
+    <input type="hidden" value="@Model.MaNV" name="id" />
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Họ và tên: </label>
+        <input type="text" class="form-control" value="@Model.HoTen" name="HoTen">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email: </label>
+        <input type="email" class="form-control" value="@Model.Email" name="Email">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Địa chỉ: </label>
+        <input type="text" class="form-control" value="@Model.DiaChi" name="DiaChi">
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Số điện thoại: </label>
+        <input type="tel" class="form-control" value="@Model.SoDienThoai" name="SoDienThoai">
+    </div>
+    <button type="submit">Cập nhật</button>
+</form>

@@ -1,0 +1,43 @@
+﻿@model BanDienThoaiDiDong.Models.NHANVIEN
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<style>
+    .center {
+        border-radius:12px;
+        padding: 24px;
+        background-color: white;
+        width:80%;
+        margin: 0 auto;
+    }
+</style>
+<div class="center">
+    <h2>Thông tin cá nhân</h2>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Mã nhân viên: </label>
+        <h3>@Model.MaNV</h3>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Họ và tên: </label>
+        <h3>@Model.HoTen</h3>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email: </label>
+        <h3>@Model.Email</h3>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Địa chỉ: </label>
+        <h3>@Model.DiaChi</h3>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Số điện thoại: </label>
+        <h3>@Model.SoDienThoai</h3>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Phân quyền: </label>
+        <h3>@Model.ROLE.TenRole</h3>
+    </div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaNV })
+</div>

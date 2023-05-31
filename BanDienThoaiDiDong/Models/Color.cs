@@ -14,17 +14,8 @@ namespace BanDienThoaiDiDong.Models
     
     public partial class Color
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Color()
-        {
-            this.ChiTietSPs = new HashSet<ChiTietSP>();
-        }
-    
-        public int ColorID { get; set; }
-        public string TenColor { get; set; }
-        public string hexColor { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietSP> ChiTietSPs { get; set; }
+        public string MaColor { get; set; }
+        public string TenMau { get; set; }
+        public string HexColor { get; set; }
     }
 }

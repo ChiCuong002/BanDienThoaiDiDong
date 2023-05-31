@@ -80,22 +80,45 @@ namespace BanDienThoaiDiDong.Controllers
             this.payment = new Payment() { id = paymentId };
             return this.payment.Execute(apiContext, paymentExecution);
         }
+        public UserCart GetCart()
+        {
+            int giohang = GetCartID();
+            List<ChiTietGH> chitietGH = db.ChiTietGHs.Where(s => s.MaGH == giohang).ToList();
+            UserCart cart = new UserCart(chitietGH);
+            return cart;
+        }
+        public int GetCartID()
+        {
+            KHACHHANG kh = (KHACHHANG)Session["kh"];
+            var giohang = db.GIOHANGs.Where(s => s.MaKH == kh.MaKH).FirstOrDefault();
+            if (giohang == null)
+            {
+                giohang = new GIOHANG();
+                giohang.MaKH = kh.MaKH;
+                giohang.TrangThai = true;
+                db.GIOHANGs.Add(giohang);
+                db.SaveChanges();
+            }
+            return giohang.id;
+        }
         private Payment CreatePayment(APIContext apiContext, string redirectUrl)
         {
             //create itemlist and add item objects to it
             var itemList = new ItemList() { items = new List<Item>() };
             //Adding Item Details like name, currency, price etc
-            Cart cart = Session["Cart"] as Cart;
+            UserCart cart = GetCart();
+            double? sumgia = 0.0;
             foreach (var item in cart.Items)
             {
                 itemList.items.Add(new Item()
                 {
-                    name = item.product.TenSP,
+                    name = item.SANPHAM.TenSP,
                     currency = "USD",
-                    price = Math.Round(item.Gia / TyGiaUsd, 2, MidpointRounding.ToEven).ToString(),
-                    quantity = item.quantity.ToString(),
+                    price = Math.Round((double)(item.SANPHAM.Gia / TyGiaUsd), 2, MidpointRounding.ToEven).ToString(),
+                    quantity = item.SoLuong.ToString(),
                     sku = "sku"
                 });
+                sumgia += Math.Round((double)(item.SANPHAM.Gia / TyGiaUsd), 2, MidpointRounding.ToEven) * item.SoLuong;
             }
             var payer = new Payer() { payment_method = "paypal" };
             // Configure Redirect Urls here with RedirectUrls object
@@ -108,12 +131,12 @@ namespace BanDienThoaiDiDong.Controllers
 
             var tax = 1;
             var shipping = 1;
-            var sum = Math.Round(cart.Total_money() / TyGiaUsd, 2, MidpointRounding.ToEven) + tax + shipping;
+            var sum = sumgia + tax + shipping;
             var details = new Details()
             {
                 tax = "1",
                 shipping = "1",
-                subtotal = Math.Round(cart.Total_money() / TyGiaUsd, 2).ToString(),
+                subtotal = sumgia.ToString()//Math.Round(cart.Total_money() / TyGiaUsd, 2).ToString(),
             };
             //Final amount with details
             var amount = new Amount()
@@ -131,15 +154,6 @@ namespace BanDienThoaiDiDong.Controllers
                 amount = amount,
                 item_list = itemList
             });
-            //string thanhcongURL = Request.Url.Scheme + "://" + Request.Url.Authority +
-            //        "/PayPal_Payment/ThanhCong?";
-            //string thatbaiURL = Request.Url.Scheme + "://" + Request.Url.Authority +
-            //        "/PayPal_Payment/ThatBai?";
-            //var redirUrls = new RedirectUrls()
-            //{
-            //    cancel_url = thatbaiURL + "&Cancel=true",
-            //    return_url = thanhcongURL
-            //};
             this.payment = new Payment()
             {
                 intent = "sale",
@@ -150,54 +164,50 @@ namespace BanDienThoaiDiDong.Controllers
             // Create a payment using a APIContext
             return this.payment.Create(apiContext);
         }
-        public void PaymentConfirm()
+        public ActionResult PaymentConfirm()
         {
             string url = Request.Url.AbsoluteUri;
             string payment_ID = Request.QueryString["paymentId"];
             if (url.Contains("&Cancel=true"))
             {
-                ThatBai();
+                TempData["message"] = "Có lỗi xảy ra trong quá trình xử lý hóa đơn ";
+                return RedirectToAction("ShowCart", "ShoppingCart");
             }
             else
             {
                 ThanhCong();
+                return RedirectToAction("ShowCart", "ShoppingCart");
             }
         }
-        public ActionResult ThatBai()
-        {
-            TempData["message"] = "Có lỗi xảy ra trong quá trình xử lý hóa đơn ";
-            return RedirectToAction("ShowCart", "ShoppingCart");
-        }
-        public ActionResult ThanhCong()
+        public void ThanhCong()
         {
             HDBAN hd = new HDBAN();
             var kh = Session["KH"] as KHACHHANG;
-            Cart cart = Session["Cart"] as Cart;
-            hd.MaHD = Guid.NewGuid().ToString();
+            UserCart cart = GetCart();
+            hd.MaHD = Guid.NewGuid().ToString(); ;
             hd.NgayDatHang = DateTime.Now;
             hd.MaKH = kh.MaKH;
             hd.DiaChiGiaoHang = kh.DiaChi;
             hd.TongGiaTri = cart.Total_money();
-            hd.TrangThaiTT = "Đã thanh toán";
+            hd.TrangThaiTT = "Chờ thanh toán";
             hd.TrangThaiDH = "Chờ xác nhận";
             hd.New = true;
-            hd.HienThi = true;
+            //hd.HienThi = true;
             db.HDBANs.Add(hd);
             foreach (var item in cart.Items)
             {
+                var sp = db.SANPHAMs.Where(s => s.MaSP == item.MaSP).FirstOrDefault();
+                sp.SoLuong -= item.SoLuong;
                 CHITIETHDBAN cthd = new CHITIETHDBAN();
                 cthd.ID_HDBAN = hd.MaHD;
-                cthd.ID_SanPham = item.product.MaSP;
-                cthd.Mau = item.color.TenColor;
-                cthd.DungLuong = item.capacity.DungLuong;
-                cthd.SoLuongDatHang = item.quantity;
-                cthd.DonGia = item.Gia;
+                cthd.ID_SanPham = item.SANPHAM.MaSP;
+                cthd.SoLuongDatHang = item.SoLuong;
+                cthd.DonGia = item.SANPHAM.Gia;
                 db.CHITIETHDBANs.Add(cthd);
             }
-            db.SaveChanges();
             cart.ClearCart();
+            db.SaveChanges();
             TempData["message"] = "Đặt hàng thành công.";
-            return RedirectToAction("ShowCart", "ShoppingCart");
         }
     }
 }

@@ -12,6 +12,27 @@ namespace BanDienThoaiDiDong.Controllers
     {
         // GET: VNPAY
         DB_DiDongEntities db = new DB_DiDongEntities();
+        public UserCart GetCart()
+        {
+            int giohang = GetCartID();
+            List<ChiTietGH> chitietGH = db.ChiTietGHs.Where(s => s.MaGH == giohang).ToList();
+            UserCart cart = new UserCart(chitietGH);
+            return cart;
+        }
+        public int GetCartID()
+        {
+            KHACHHANG kh = (KHACHHANG)Session["kh"];
+            var giohang = db.GIOHANGs.Where(s => s.MaKH == kh.MaKH).FirstOrDefault();
+            if (giohang == null)
+            {
+                giohang = new GIOHANG();
+                giohang.MaKH = kh.MaKH;
+                giohang.TrangThai = true;
+                db.GIOHANGs.Add(giohang);
+                db.SaveChanges();
+            }
+            return giohang.id;
+        }
         public ActionResult Payment()
         {
             string url = ConfigurationManager.AppSettings["Url"];
@@ -24,9 +45,9 @@ namespace BanDienThoaiDiDong.Controllers
             pay.AddRequestData("vnp_Version", "2.1.0"); //Phiên bản api mà merchant kết nối. Phiên bản hiện tại là 2.1.0
             pay.AddRequestData("vnp_Command", "pay"); //Mã API sử dụng, mã cho giao dịch thanh toán là 'pay'
             pay.AddRequestData("vnp_TmnCode", tmnCode); //Mã website của merchant trên hệ thống của VNPAY (khi đăng ký tài khoản sẽ có trong mail VNPAY gửi về)
-            Cart cart = Session["Cart"] as Cart;
+            UserCart cart = GetCart();
             decimal total = cart.Total_money() * 100;
-            string total1 = total.ToString();
+            string total1 = total.ToString("0");
             pay.AddRequestData("vnp_Amount", total1); //số tiền cần thanh toán, công thức: số tiền * 100 - ví dụ 10.000 (mười nghìn đồng) --> 1000000
             pay.AddRequestData("vnp_BankCode", ""); //Mã Ngân hàng thanh toán (tham khảo: https://sandbox.vnpayment.vn/apis/danh-sach-ngan-hang/), có thể để trống, người dùng có thể chọn trên cổng thanh toán VNPAY
             pay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss")); //ngày thanh toán theo định dạng yyyyMMddHHmmss
@@ -100,30 +121,30 @@ namespace BanDienThoaiDiDong.Controllers
         {
             HDBAN hd = new HDBAN();
             var kh = Session["KH"] as KHACHHANG;
-            Cart cart = Session["Cart"] as Cart;
+            UserCart cart = GetCart();
             hd.MaHD = orderID;
             hd.NgayDatHang = DateTime.Now;
             hd.MaKH = kh.MaKH;
             hd.DiaChiGiaoHang = kh.DiaChi;
             hd.TongGiaTri = cart.Total_money();
-            hd.TrangThaiTT = "Đã thanh toán";
+            hd.TrangThaiTT = "Chờ thanh toán";
             hd.TrangThaiDH = "Chờ xác nhận";
             hd.New = true;
-            hd.HienThi = true;
+            //hd.HienThi = true;
             db.HDBANs.Add(hd);
             foreach (var item in cart.Items)
             {
+                var sp = db.SANPHAMs.Where(s => s.MaSP == item.MaSP).FirstOrDefault();
+                sp.SoLuong -= item.SoLuong;
                 CHITIETHDBAN cthd = new CHITIETHDBAN();
-                cthd.ID_HDBAN = orderID;
-                cthd.ID_SanPham = item.product.MaSP;
-                cthd.Mau = item.color.TenColor;
-                cthd.DungLuong = item.capacity.DungLuong;
-                cthd.SoLuongDatHang = item.quantity;
-                cthd.DonGia = item.Gia;
+                cthd.ID_HDBAN = hd.MaHD;
+                cthd.ID_SanPham = item.SANPHAM.MaSP;
+                cthd.SoLuongDatHang = item.SoLuong;
+                cthd.DonGia = item.SANPHAM.Gia;
                 db.CHITIETHDBANs.Add(cthd);
             }
-            db.SaveChanges();
             cart.ClearCart();
+            db.SaveChanges();
             TempData["message"] = "Đặt hàng thành công.";
         }
     }

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<BanDienThoaiDiDong.Models.CHITIETHDBAN>
+@{
+    ViewBag.Title = "DetailOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    BanDienThoaiDiDong.Models.HDBAN hd = ViewBag.HD;
+}
+<style>
+    .gradient-custom {
+        /* fallback for old browsers */
+        background: #F1F6F9;
+    }
+</style>
+<section class="h-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-10 col-xl-8">
+                <div class="card" style="border-radius: 10px;">
+                    <div class="card-header px-4 py-5">
+                        <h5 class="text-muted mb-0">Cảm ơn vì đơn hàng của bạn, <span style="color: #a8729a;">@ViewBag.Ten</span>!</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <p class="lead fw-normal mb-0" style="color: #a8729a;">Các sản phẩm đã đặt</p>
+                        </div>
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="card shadow-0 border mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="~/Images/@item.SANPHAM.Hinh"
+                                                 class="img-fluid" alt="Phone">
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0">@item.SANPHAM.TenSP</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Màu: @item.GetMau(item.ID_SanPham)</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Dung lượng: @item.GetDungLuong(item.ID_SanPham)</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Số lượng: @item.SoLuongDatHang</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Đơn giá: @string.Format("{0:#,##0} VNĐ", item.DonGia)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                        <div class="d-flex justify-content-between pt-2">
+                            <p class="fw-bold mb-0">Thông tin đơn hàng</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between pt-2">
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Mã hóa đơn</span> : @hd.MaHD</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between pt-2">
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Trạng thái đơn hàng</span> : @hd.TrangThaiDH</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between pt-2">
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Trạng thái thanh toán</span> : @hd.TrangThaiTT</p>
+                            
+                        </div>
+                    </div>
+                    <div class="card-footer border-0 px-4 py-5"
+                         style="background-color: #83AFA6; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                        <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
+                            Tổng giá trị đơn hàng: <span class="h2 mb-0 ms-2">@string.Format("{0:#,##0} VNĐ", hd.TongGiaTri)</span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

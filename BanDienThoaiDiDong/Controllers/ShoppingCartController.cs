@@ -1,6 +1,8 @@
 ﻿using BanDienThoaiDiDong.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.EnterpriseServices.CompensatingResourceManager;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -12,73 +14,73 @@ namespace BanDienThoaiDiDong.Controllers
     {
         // GET: ShoppingCart
         DB_DiDongEntities db = new DB_DiDongEntities();
-        public ActionResult Index()
-        {
-            var kh = db.KHACHHANGs.Where(s => s.MaKH == 1).FirstOrDefault();
-            Session["KH"] = kh;
-            return View(db.SANPHAMs.ToList());
-        }
         public ActionResult ShowCart()
         {
             string msg = "";
+            var cart = GetCart();
             if (TempData["message"] != null)
             {
                 msg = TempData["message"].ToString();
                 ViewBag.Message = msg;
             }
-            if (Session["Cart"] == null)
+            if (cart == null)
             {
                 ViewBag.Message = "Giỏ hàng của bạn hiện đang trống.";
                 return View();
             }
-            Cart cart = Session["Cart"] as Cart;
-            ViewBag.TongTien = cart.Total_money();
             return View(cart);
         }
-        public Cart GetCart()
+        public UserCart GetCart()
         {
-            Cart cart = Session["Cart"] as Cart;
-            if (cart == null || Session["Cart"] == null)
-            {
-                cart = new Cart();
-                Session["Cart"] = cart;
-            }
+            int giohang = GetCartID();
+            List<ChiTietGH> chitietGH = db.ChiTietGHs.Where(s => s.MaGH == giohang).ToList();
+            UserCart cart = new UserCart(chitietGH);
             return cart;
         }
-        public ActionResult AddToCart(int MaSP, int color, int dungluong, string gia)
+        public int GetCartID()
         {
-            var pro = db.SANPHAMs.SingleOrDefault(s => s.MaSP == MaSP);
-            var mau = db.Colors.SingleOrDefault(s => s.ColorID == color);
-            var capacity = db.Capacities.SingleOrDefault(s => s.CapacityID == dungluong);
-            decimal donGia = decimal.Parse(gia, CultureInfo.InvariantCulture);
-            if (pro != null && mau != null && capacity != null)
+            KHACHHANG kh = (KHACHHANG)Session["kh"];
+            var giohang = db.GIOHANGs.Where(s => s.MaKH == kh.MaKH).FirstOrDefault();
+            if (giohang == null)
             {
-                GetCart().Add_Product_Cart(pro, capacity, mau, donGia, 1);
+                giohang = new GIOHANG();
+                giohang.MaKH = kh.MaKH;
+                giohang.TrangThai = true;
+                db.GIOHANGs.Add(giohang);
+                db.SaveChanges();
             }
-            return RedirectToAction("ShowCart", "ShoppingCart");
+            return giohang.id;
+        }
+        public ActionResult AddToCart(string masp)
+        {
+            if (Session["kh"] == null)
+                return RedirectToAction("Login", "Account");
+            else { 
+            int giohang_id = GetCartID();
+            bool flag = GetCart().Add_To_Cart( masp, giohang_id);
+            if(flag == true)
+            {
+                return RedirectToAction("ShowCart");
+            }
+            return View();
+            }
         }
         [HttpPost]
-        public JsonResult Update_Cart_Quantity(int idPro, int quant)//FormCollection form)
+        public JsonResult Update_Cart_Quantity(int idPro, int quant)
         {
-            Cart cart = Session["Cart"] as Cart;
-            int productID = idPro;//int.Parse(form["idPro"]);
-            int quantity = quant;//int.Parse(form["CartQuantity"]);
-            cart.Update_quantity(productID, quantity);
+            int giohang = GetCartID();
+            var sanpham = db.ChiTietGHs.Where(s => s.id == idPro && s.MaGH == giohang).FirstOrDefault();
+            sanpham.SoLuong = quant;
+            db.Entry(sanpham).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
             return Json("success", JsonRequestBehavior.AllowGet);
         }
         public ActionResult RemoveCart(int id)
         {
-            Cart cart = Session["Cart"] as Cart;
-            cart.Remove_CartItem(id);
+            var sanpham = db.ChiTietGHs.Where(s => s.id == id).FirstOrDefault();
+            db.ChiTietGHs.Remove(sanpham);
+            db.SaveChanges();
             return RedirectToAction("ShowCart", "ShoppingCart");
-        }
-        public JsonResult Update_Gia(int id, int slted)
-        {
-            var gia = db.ChiTietSPs.Where(s => s.MaSP == id && s.MaCapacity == slted).FirstOrDefault();
-            decimal result = 0;
-            if (gia != null)
-                result = (decimal)gia.Gia;
-            return Json(new { success = true, message = "" + result.ToString("N0") }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult DiaChiGiaoHang()
@@ -90,14 +92,14 @@ namespace BanDienThoaiDiDong.Controllers
         [HttpPost]
         public ActionResult PayMethod(string PaymentMethod)
         {
-            Cart cart = Session["Cart"] as Cart;
+            UserCart cart = GetCart();
             foreach (var item in cart.Items)
             {
-                var sp = db.ChiTietSPs.Where(s => s.MaSP == item.product.MaSP && s.MaCapacity == item.capacity.CapacityID && s.MaColor == item.color.ColorID).FirstOrDefault();
-                int soluongsp = (int)sp.SoLuong;
-                if (item.quantity > soluongsp)
+                var sp = db.SANPHAMs.Where(s => s.MaSP == item.MaSP).FirstOrDefault();
+                int? soluongsp = item.SoLuong;
+                if (sp.SoLuong < soluongsp)
                 {
-                    TempData["message"] = "Số lượng sản phẩm " + item.product.TenSP + " vượt quá số lượng trong kho.";
+                    TempData["message"] = "Số lượng sản phẩm " + item.SANPHAM.TenSP + " vượt quá số lượng trong kho.";
                     return RedirectToAction("ShowCart");
                 }
             }
@@ -120,7 +122,7 @@ namespace BanDienThoaiDiDong.Controllers
 
             HDBAN hd = new HDBAN();
             var kh = Session["KH"] as KHACHHANG;
-            Cart cart = Session["Cart"] as Cart;
+            UserCart cart = GetCart();
             hd.MaHD = GenerateID(10);
             hd.NgayDatHang = DateTime.Now;
             hd.MaKH = kh.MaKH;
@@ -129,23 +131,21 @@ namespace BanDienThoaiDiDong.Controllers
             hd.TrangThaiTT = "Chờ thanh toán";
             hd.TrangThaiDH = "Chờ xác nhận";
             hd.New = true;
-            hd.HienThi = true;
+            //hd.HienThi = true;
             db.HDBANs.Add(hd);
             foreach (var item in cart.Items)
             {
-                var sp = db.ChiTietSPs.Where(s => s.MaSP == item.product.MaSP && s.MaCapacity == item.capacity.CapacityID && s.MaColor == item.color.ColorID).FirstOrDefault();
-                sp.SoLuong -= item.quantity;
+                var sp = db.SANPHAMs.Where(s => s.MaSP == item.MaSP).FirstOrDefault();
+                sp.SoLuong -= item.SoLuong;
                 CHITIETHDBAN cthd = new CHITIETHDBAN();
                 cthd.ID_HDBAN = hd.MaHD;
-                cthd.ID_SanPham = item.product.MaSP;
-                cthd.Mau = item.color.TenColor;
-                cthd.DungLuong = item.capacity.DungLuong;
-                cthd.SoLuongDatHang = item.quantity;
-                cthd.DonGia = item.Gia;
+                cthd.ID_SanPham = item.SANPHAM.MaSP;
+                cthd.SoLuongDatHang = item.SoLuong;
+                cthd.DonGia = item.SANPHAM.Gia;
                 db.CHITIETHDBANs.Add(cthd);
-            }
-            db.SaveChanges();
+            }     
             cart.ClearCart();
+            db.SaveChanges();
             TempData["message"] = "Đặt hàng thành công.";
             return RedirectToAction("ShowCart");
         }

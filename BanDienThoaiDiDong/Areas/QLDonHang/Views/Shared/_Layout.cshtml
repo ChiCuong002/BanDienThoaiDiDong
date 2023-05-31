@@ -1,0 +1,324 @@
+﻿﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <title>QuanLyDonHang</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f6f5fb;
+        }
+
+        aside {
+            width: 16rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            position: fixed;
+            top: 1px;
+            bottom: 1px;
+            left: 0;
+            z-index: 3;
+            border-top-right-radius: 35px;
+            border-bottom-right-radius: 35px;
+            transition: width 0.5s;
+            padding: 20px 0px;
+        }
+
+
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        header {
+            background-image: linear-gradient(to left,#F35C17,#FF920B);
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 2;
+            padding-left: calc(16rem + 48px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 48px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: #fff;
+            font-weight: 300;
+        }
+
+        .togger {
+            padding-left: calc(5.2rem + 48px);
+        }
+
+        .aside-togger {
+            width: 85px;
+        }
+
+        .nav-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 999px;
+            background-color: hsla(0,0%,100%,.15);
+            padding: 4px;
+        }
+
+            .nav-header img {
+                display: inline-block;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                border: 4px solid rgba(225,225,255,.37);
+                margin-right: 10px;
+            }
+
+            .nav-header i {
+                display: block;
+                margin-top: -5px;
+                color: white;
+                margin-left: 10px;
+                margin-right: 20px;
+            }
+
+        .nav {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-content {
+            display: block;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 12px 20px 0 rgba(0,0,0,.08);
+            border-radius: 6px;
+            z-index: 2;
+            padding: 5px 0px;
+            list-style: none;
+            color: #929baa;
+            right: 0;
+            margin-top: 5px;
+            min-width: 160px;
+        }
+
+            .nav-content li {
+                padding: 6px 16px;
+            }
+
+                .nav-content li:hover {
+                    background-color: #f6f7f9;
+                }
+
+        .nav-header:hover .nav-content {
+            display: block;
+        }
+
+        #show {
+            background-color: #FF7B1D;
+            border-radius: 100%;
+            position: absolute;
+            top: 110px;
+            right: -12px;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+
+        aside > img {
+            display: inline-block;
+            height: 50px;
+            width: 150px;
+            max-width: 200px;
+        }
+
+        .sidebar-logo {
+            padding-top: 20px;
+            cursor: pointer;
+        }
+
+        .sidebar-content {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            margin-top: 50px;
+            padding-right: 8px;
+        }
+
+            .sidebar-content .item {
+                width: 100%;
+                border-top-right-radius: 50px;
+                border-bottom-right-radius: 50px;
+                padding: 8px 16px 8px 24px;
+                cursor: pointer;
+                color: #64728c;
+                display: flex;
+                justify-content: center;
+                text-decoration: none;
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                font-size: 1rem;
+                font-weight: 500;
+                font-family: Nunito Sans;
+                overflow: hidden;
+            }
+
+                .sidebar-content .item img {
+                    display: inline-block;
+                    width: 26px;
+                    height: 26px;
+                    margin-right: 10px;
+                }
+
+                .sidebar-content .item span {
+                    text-align: left;
+                }
+
+                .sidebar-content .item:hover {
+                    background-color: rgba(255, 123, 29, 0.1);
+                }
+
+        .active {
+            background-image: linear-gradient(to left,#F35C17,#FF920B);
+            color: #fff;
+        }
+
+            .active > span {
+                color: #fff;
+            }
+
+        .sidebar-content .item i {
+            color: black;
+        }
+
+        .none {
+            display: none;
+        }
+
+        .content {
+            padding-top: 4rem;
+            padding-left: calc(16rem + 48px);
+            padding-right: 48px;
+            color: #64728c;
+        }
+
+            .content > .tb {
+                margin-top: 5rem;
+                background-color: #fff;
+                border-radius: 1.2rem;
+            }
+    </style>
+</head>
+<body>
+    <div class="bg none">
+
+    </div>
+    <!-- sidebar -->
+    <aside>
+        <div class="sidebar-logo">
+        </div>
+        <i id="show" class="fas fa-chevron-right"></i>
+        <div class="sidebar-content">
+            <a class="item active">
+               
+                <span>Quản lý đơn hàng</span>
+            </a>
+        </div>
+    </aside>
+    <!-- End sidebar -->
+    <header class="">
+        <h2>Quản lý đơn hàng</h2>
+
+
+        <!-- Đăng nhập đăng xuất -->
+        <div class="nav">
+            <div class="nav-header">
+               
+                <p>@User.Identity.Name</p>
+                <i class="fas fa-sort-down"></i>
+            </div>
+            <ul class="nav-content none">
+                <li><a href="/Admin/AdminLogin/LogOut">Đăng xuất</a></li>
+            </ul>
+        </div>
+        <!-- Kết thúc đăng nhập đăng xuất -->
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
+
+<script>
+    const btnElm = document.getElementById("show");
+    let isRotated = false;
+    let isExpanded = false;
+    btnElm.addEventListener("click", (e) => {
+        setTimeout(() => {
+            document.querySelectorAll("body > aside > div.sidebar-content > a > span").forEach((item) => {
+                item.classList.toggle('none');
+            })
+        }, 300);
+        document.getElementsByTagName("header")[0].classList.toggle("togger");
+        document.getElementById("main").classList.toggle("togger");
+        document.getElementsByTagName("aside")[0].classList.toggle("aside-togger");
+
+        if (isRotated) {
+            btnElm.style.transform = 'rotate(0deg)';
+            isRotated = false;
+        } else {
+            btnElm.style.transform = 'rotate(-180deg)';
+            isRotated = true;
+        }
+
+        if (isExpanded) {
+            box.style.width = '5.2rem';
+            isExpanded = false;
+        } else {
+            box.style.width = '16rem';
+            isExpanded = true;
+        }
+
+    });
+    var navElm = document.getElementsByClassName('nav')[0];
+    navElm.addEventListener('click', (e) => {
+
+        document.getElementsByClassName('nav-content')[0].classList.remove('none');
+
+        document.addEventListener('click', function (event) {
+            const outsideClick = !document.getElementsByClassName('nav')[0].contains(event.target);
+            if (outsideClick) {
+                document.getElementsByClassName('nav-content')[0].classList.add('none');
+            }
+        });
+    });
+</script>
+
+
+

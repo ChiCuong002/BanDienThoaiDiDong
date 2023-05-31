@@ -11,18 +11,30 @@ namespace BanDienThoaiDiDong.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class CHITIETHDBAN
     {
+        DB_DiDongEntities db = new DB_DiDongEntities();
         public int MaCTHD { get; set; }
-        public Nullable<int> ID_SanPham { get; set; }
+        public string ID_SanPham { get; set; }
         public string ID_HDBAN { get; set; }
-        public string Mau { get; set; }
-        public string DungLuong { get; set; }
         public Nullable<int> SoLuongDatHang { get; set; }
         public Nullable<decimal> DonGia { get; set; }
     
         public virtual HDBAN HDBAN { get; set; }
         public virtual SANPHAM SANPHAM { get; set; }
+        public string GetDungLuong(string masp)
+        {
+            var id = masp.Substring(masp.IndexOf("m") + 1, masp.IndexOf("d") - masp.IndexOf("m"));
+            var dungluong = db.Capacities.Where(s => s.MaCapacity == id).FirstOrDefault();
+            return dungluong.DungLuong;
+        }
+        public string GetMau(string masp)
+        {
+            var maMau = masp.Substring(0, masp.IndexOf("m") + 1);
+            var mau = db.Colors.Where(s => s.MaColor == maMau).FirstOrDefault();
+            return mau.TenMau;
+        }
     }
 }

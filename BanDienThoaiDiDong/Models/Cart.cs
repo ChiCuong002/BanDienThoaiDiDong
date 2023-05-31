@@ -20,25 +20,7 @@ namespace BanDienThoaiDiDong.Models
         {
             get { return items; }
         }
-        public void Add_Product_Cart(SANPHAM pro, Capacity cap, Color cl, decimal gia, int quant = 1)
-        {
-            var item = Items.FirstOrDefault(s => s.product.MaSP == pro.MaSP);
-            var dungluong = Items.FirstOrDefault(s => s.capacity.CapacityID == cap.CapacityID);
-            var mau = Items.FirstOrDefault(s => s.color.ColorID == cl.ColorID);
-            if (item == null)
-            {
-                items.Add(new CartItem { product = pro, quantity = quant, capacity = cap, color = cl, Gia = gia });
-            }
-            else
-            {
-                if (dungluong == null)
-                    items.Add(new CartItem { product = pro, quantity = quant, capacity = cap, color = cl, Gia = gia });
-                else if (mau == null)
-                    items.Add(new CartItem { product = pro, quantity = quant, capacity = cap, color = cl, Gia = gia });
-                else
-                    item.quantity += quant;
-            }
-        }
+        
         public int Total_quantity()
         {
             return Items.Sum(s => s.quantity);

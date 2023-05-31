@@ -1,0 +1,248 @@
+﻿@model BanDienThoaiDiDong.Models.SANPHAM
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<style>
+    .add-from-content {
+        width: 100%;
+        display: flex;
+        gap: 10rem;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+
+    .add-form {
+        margin-top: 5rem;
+        background-color: #fff;
+        border-radius: 1.2rem;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        flex: 1;
+    }
+
+    form {
+        display: block;
+    }
+
+    .add-form > h3 {
+        width: 100%;
+        font-size: 30px;
+        font-weight: 800;
+        color: #64728C;
+        border-bottom: 1px solid #64728C;
+        padding-bottom: 20px;
+    }
+
+    .add-form .add-form-input {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: 5px;
+        margin-bottom: 10px;
+    }
+
+    .add-form-input p {
+        color: #000;
+        font-size: 20px;
+        margin-left: 5px;
+    }
+
+    textarea {
+        width: 100%;
+        height: 150px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        font-size: 16px;
+        resize: none;
+    }
+
+    .image-product {
+        width: 80%;
+        border: 1px dotted #64728C;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .image-product img {
+            display: inline-block;
+            max-width: 500px;
+        }
+
+    .image-product {
+        font-size: 2rem;
+        cursor: pointer;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .add-btn {
+        margin-top: 2rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .add-btn label {
+            font-size: 20px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            font-family: Nunito Sans,sans-serif;
+            font-weight: 400;
+            border: 0;
+            border-radius: 3em;
+            cursor: pointer;
+            display: inline-block;
+            line-height: 1;
+            padding-right: 32px;
+            padding-left: 32px;
+            min-width: 100px;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+            color: #eb0910;
+            background-color: rgba(235,9,16,.3);
+        }
+
+            .add-btn label:hover {
+                background-color: rgb(235,9,16);
+                color: #fff;
+            }
+
+    .custom-select {
+        position: relative;
+        font-family: Arial;
+        border-radius: 10px;
+        border: 1px solid #64728C;
+    }
+
+        .custom-select select {
+            display: none; /*hide original SELECT element:*/
+        }
+
+    .select-selected {
+        background-color: #fff;
+    }
+
+        /*style the arrow inside the select element:*/
+        .select-selected:after {
+            position: absolute;
+            content: "";
+            top: 14px;
+            right: 10px;
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-color: #fff;
+        }
+
+        /*point the arrow upwards when the select box is open (active):*/
+        .select-selected.select-arrow-active:after {
+            border-color: #fff;
+            top: 7px;
+        }
+
+    /*style the items (options), including the selected item:*/
+    .select-items div, .select-selected {
+        padding: 8px 16px;
+        border: 1px solid transparent;
+        border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+        cursor: pointer;
+        user-select: none;
+        border-radius: 10px;
+    }
+
+    /*style items (options):*/
+    .select-items {
+        position: absolute;
+        background-color: #fff;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        border: 1px solid #64728C;
+        border-radius: 10px;
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+
+        .select-items::-webkit-scrollbar {
+            width: 6px;
+            background-color: #F5F5F5;
+        }
+
+    /*hide the items when the select box is closed:*/
+    .select-hide {
+        display: none;
+    }
+
+    .select-items div:hover, .same-as-selected {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .back {
+        margin-top: 0;
+        justify-content: start;
+        align-items: center;
+    }
+
+    /* End css Nội dung */
+    .togger {
+        padding-left: calc(5.2rem + 48px);
+    }
+</style>
+<div id="main" class="content">
+    <!-- Bắt đầu form -->
+    <div class="add-form">
+        <div class="add-btn back">
+            <label><a href="/Admin/DanhSachSanPham/Index">Quay về</a></label>
+        </div>
+        <h3>Chi tiết sản phẩm</h3>
+        <div class="add-from-content">
+            <form action="/DanhSachSanPham/Delete/@Model.MaSP" method="post">
+                <div class="add-form-input">
+                    <label for="">Tên sản phẩm</label>
+                    <p>@Model.TenSP</p>
+                </div>
+                <div class="add-form-input des">
+                    <label for="">Mô tả</label>
+                    <textarea disabled>@Model.MoTa</textarea>
+                </div>
+                <div class="add-form-input">
+                    <label for="">Dung lượng</label>
+                    <p>@Model.GetDungLuong(Model.MaSP)</p>
+                </div>
+                <div class="add-form-input">
+                    <label for="">Mã màu</label>
+                    <p>@Model.GetMau(Model.MaSP)</p>
+                </div>
+                <div class="add-form-input">
+                    <label for="">Dòng máy</label>
+                    <p>@Model.GetSeri(Model.MaSP)</p>
+                </div>
+
+
+                <div class="add-form-input">
+                    <label for="">Mã loại</label>
+                    <p>@Model.LOAISANPHAM.TenLoai</p>
+                </div>
+                <input type="submit" id="ipSm" style=" visibility: hidden;">
+            </form>
+            <label for="chooseImg" class="image-product">
+
+                <img src="~/Images/@Model.Hinh" alt="">
+            </label>
+
+        </div>
+
+    </div>
+    <!-- Kết thúc form -->
+
+</div>

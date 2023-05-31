@@ -17,6 +17,7 @@ namespace BanDienThoaiDiDong.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KHACHHANG()
         {
+            this.GIOHANGs = new HashSet<GIOHANG>();
             this.HDBANs = new HashSet<HDBAN>();
         }
     
@@ -25,9 +26,13 @@ namespace BanDienThoaiDiDong.Models
         public string Email { get; set; }
         public string DiaChi { get; set; }
         public string SoDienThoai { get; set; }
+        public string UserName { get; set; }
         public string MatKhau { get; set; }
         public Nullable<bool> HienThi { get; set; }
-    
+        public string confirmMatKhau { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GIOHANG> GIOHANGs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HDBAN> HDBANs { get; set; }
     }
