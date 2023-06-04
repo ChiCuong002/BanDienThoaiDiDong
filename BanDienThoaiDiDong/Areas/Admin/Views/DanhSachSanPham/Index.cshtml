@@ -1,0 +1,249 @@
+﻿﻿@model IEnumerable<BanDienThoaiDiDong.Models.SANPHAM>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+
+    .content > .tb {
+        background-color: #fff;
+        border-radius: 1.2rem;
+    }
+
+    .add-product {
+        border-bottom: .5px solid #64728c;
+        padding: 25px;
+    }
+
+    h3 {
+        padding: 25px;
+    }
+
+    .add-product > button {
+        color: #fff;
+        background-color: #76BC21;
+        cursor: pointer;
+        font-family: Nunito Sans;
+        font-weight: 500;
+        border: 0;
+        border-radius: 3em;
+        display: inline-block;
+        line-height: 1;
+        padding-right: 32px;
+        padding-left: 32px;
+        min-width: 100px;
+        font-size: 14px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        text-align: center;
+    }
+
+        .add-product > button:hover {
+            background-color: #84d225;
+        }
+
+    .tb-product {
+        background-color: #e8eaef;
+        padding: 0.5rem;
+        font-family: Nunito Sans;
+        font-size: 0.85rem;
+    }
+
+    .tb-product-item {
+        cursor: pointer;
+        display: flex;
+        justify-content: space-around;
+        background-color: #fff;
+        border-radius: 1.2rem;
+        min-height: 45px;
+        align-items: center;
+        font-weight: 400px;
+        padding: 10px;
+        flex-wrap: nowrap;
+        margin-bottom: 10px;
+    }
+
+        .tb-product-item > div {
+            min-width: 10%;
+        }
+
+        .tb-product-item:hover {
+            background-color: rgba(37, 21, 21, 0.1);
+        }
+
+    .tb-product-acition i {
+        display: inline-block;
+        color: #64728c;
+        background-color: rgba(37, 21, 21, 0.2);
+        border-radius: 50%;
+        padding: 3px;
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+        text-align: center;
+        margin-right: 5px;
+    }
+
+        .tb-product-acition i:hover {
+            background-color: rgba(37, 21, 21, 0.3);
+        }
+
+    .tb-product-des {
+        text-align: justify;
+        flex: 3;
+    }
+
+    .tb-product-name {
+        text-align: center;
+        flex: 1;
+    }
+
+    .tb-product-img {
+        margin-left: 15px;
+        flex: 1;
+    }
+
+        .tb-product-img > img {
+            display: inline-block;
+            width: 80%;
+        }
+
+    .header {
+        background-color: transparent;
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    .tb-product-status {
+        flex: 1;
+    }
+
+    .tb-product-type {
+        flex: 1;
+    }
+
+    .tb-product-acition {
+        flex: 1;
+    }
+</style>
+<div id="main" class="content">
+    <div class="tb">
+        <div class="add-product">
+            <button>
+                @Html.ActionLink("Thêm", "Create")
+            </button>
+        </div>
+        <h3>
+            Danh sách sản phẩm
+        </h3>
+        <div class="tb-product">
+            <div class="tb-product-item header">
+                <div class="tb-product-name">
+                    <span>Tên</span>
+                </div>
+                <div class="tb-product-des">
+                    <span>Mô tả</span>
+                </div>
+                <div class="tb-product-img">
+                    <span>Ảnh</span>
+                </div>
+                <div class="tb-product-status">
+                    <span>Trạng thái</span>
+                </div>
+                <div class="tb-product-type">
+                    <span>Loại</span>
+                </div>
+                <div class="tb-product-acition">
+
+                </div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <!-- Từng sản phẩm -->
+                <div class="tb-product-item">
+                    <div class="tb-product-name">
+                        <span>@Html.DisplayFor(modelItem => item.TenSP)</span>
+                    </div>
+                    <div class="tb-product-des">
+                        <span>@Html.DisplayFor(modelItem => item.MoTa)</span>
+                    </div>
+                    <div class="tb-product-img">
+                        <img src="~/Images/@item.Hinh" alt="">
+                    </div>
+                    <div class="tb-product-status">
+                        <span>@Html.DisplayFor(modelItem => item.Gia)</span>
+                    </div>
+                    <div class="tb-product-type">
+                        <span>@Html.DisplayFor(modelItem => item.LOAISANPHAM.TenLoai)</span>
+                    </div>
+                    <div class="">
+                        <i class="fas fa-edit">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.MaSP }) |
+                        </i>
+                        <i class="fas fa-plus">
+                            @Html.ActionLink("Details", "Details", new { id = item.MaSP }) |
+                        </i>
+                        <i class="fas fa-trash-alt">
+                            @Html.ActionLink("Delete", "Delete", new { id = item.MaSP })
+                        </i>
+                    </div>
+                </div>
+                <!-- Kết thúc từng sản phẩm -->
+            }
+        </div>
+    </div>
+    <script>
+        const btnElm = document.getElementById("show");
+        let isRotated = false;
+        let isExpanded = false;
+        btnElm.addEventListener("click", (e) => {
+            setTimeout(() => {
+                document.querySelectorAll("body > aside > div.sidebar-content > a > span").forEach((item) => {
+                    item.classList.toggle('none');
+                })
+            }, 300);
+            document.getElementsByTagName("header")[0].classList.toggle("togger");
+            document.getElementById("main").classList.toggle("togger");
+            document.getElementsByTagName("aside")[0].classList.toggle("aside-togger");
+
+            if (isRotated) {
+                btnElm.style.transform = 'rotate(0deg)';
+                isRotated = false;
+            } else {
+                btnElm.style.transform = 'rotate(-180deg)';
+                isRotated = true;
+            }
+
+            if (isExpanded) {
+                box.style.width = '5.2rem';
+                isExpanded = false;
+            } else {
+                box.style.width = '16rem';
+                isExpanded = true;
+            }
+
+        });
+        var navElm = document.getElementsByClassName('nav')[0];
+        navElm.addEventListener('click', (e) => {
+
+            document.getElementsByClassName('nav-content')[0].classList.remove('none');
+
+            document.addEventListener('click', function (event) {
+                const outsideClick = !document.getElementsByClassName('nav')[0].contains(event.target);
+                if (outsideClick) {
+                    document.getElementsByClassName('nav-content')[0].classList.add('none');
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
+

@@ -1,0 +1,159 @@
+﻿@model BanDienThoaiDiDong.Models.SANPHAM
+    @{
+        ViewBag.Title = "Details";
+        //Layout = "~/Views/Shared/_Layout.cshtml";
+        IEnumerable<BanDienThoaiDiDong.Models.Color> listmau = ViewBag.mau;
+        IEnumerable<BanDienThoaiDiDong.Models.Capacity> listcapa = ViewBag.capa;
+    }
+
+    <link href="~/Content/toast.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link href="~/Content/detailSP.css" rel="stylesheet" />
+    <div id="details-container">
+        <div class="container flex">
+            <div class="left">
+                
+                <div class="main_image">
+                    <img src="~/Images/@Model.Hinh" class="slide">
+                </div>
+                <div class="ship-info">
+                    <h3>Thông tin vận chuyển</h3>
+                    <table style="width:100%">
+                        <tbody>
+                            <tr>
+                                <td style="color: #6c757d ">Phí vận chuyển:</td>
+                                <td>Miễn phí</td>
+                            </tr>
+                            <tr>
+                                <td style="color: #6c757d ">Vận chuyển:</td>
+                                <td>Từ Việt Nam, Thành phố Hồ Chí Minh</td>
+                            </tr>
+                            <tr>
+                                <td style="color: #6c757d ">Hình thức thanh toán:</td>
+                                <td>
+                                    Ship COD, VNPAY, PAYPAL
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="right">
+                <h3>@Model.TenSP</h3>
+                <h4 id="sp_gia" style="color:black">
+                    @{
+                        double price = (double)Model.Gia;
+                    }
+                    @price.ToString("N0") VND
+                </h4>
+                <p>@Model.MoTa </p>
+                <hr />
+                <h5>Màu </h5>
+                <div class="color flex1">
+                    @foreach (var item in listmau)
+                    {
+                        <div class="mau" style="background-color:@item.HexColor" data-color="@item.MaColor"></div>
+                    }
+                </div>
+                <hr />
+                <h5>Dung lượng </h5>
+                <div class="color flex1">
+                    @foreach (var item in listcapa)
+                    {
+
+                        <div class="capa" data-capa="@item.MaCapacity">@item.DungLuong</div>
+                    }
+                </div>
+                <form action="/ShoppingCart/AddToCart">
+                    @Html.HiddenFor(model => model.MaSP)
+                    <button class="myBtn">Thêm vào giỏ hàng</button>
+                </form>
+            </div>
+        </div>    
+    </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+    var mau;
+    var dungluong;
+    var seri;
+    $(document).ready(function () {
+        var masp = document.querySelector('#MaSP').value;
+        mau = masp.substring(0, masp.indexOf("m") + 1);
+        dungluong = masp.substring(masp.indexOf("m") + 1, masp.indexOf("d") + 1);
+        seri = masp.substring(masp.indexOf("d") + 1, masp.indexOf("s") + 1);
+        console.log(mau);
+        console.log(dungluong);
+        defaultChoose(mau, dungluong);
+    });
+    function defaultChoose(mau, dungluong) {
+        var defaultColor = document.querySelector('.mau[data-color="' + mau + '"]');
+        var defaultCapa = document.querySelector('.capa[data-capa="' + dungluong + '"]');
+        if (defaultColor) {
+            defaultColor.style.border = "2.5px solid #6DA9E4";
+            previousElement = defaultColor;
+        }
+        if (defaultCapa) {
+            defaultCapa.style.border = "1.5px solid #6DA9E4";
+            previousElement_capa = defaultCapa;
+        }
+    }
+
+    var color = document.getElementsByClassName("mau");
+    for (var i = 0; i < color.length; i++) {
+        color[i].onclick = changeColor;
+    }
+
+    var capa = document.getElementsByClassName("capa");
+    for (var i = 0; i < capa.length; i++) {
+        capa[i].onclick = changeCapa;
+    }
+
+    function changeColor(e) {
+        var newColor = this.getAttribute("data-color");
+        console.log("new color " + newColor);
+        // Remove the border from the previously selected element, if any
+        if (previousElement) {
+            previousElement.style.border = "none";
+        }
+
+        // Add a border to the clicked element
+        this.style.border = "2.5px solid #6DA9E4";
+
+        // Store a reference to the clicked element as the new previous element
+        previousElement = this;
+        GetNewPhone(newColor, dungluong, seri);
+    }
+
+    function changeCapa(e) {
+        var Newdungluong = this.getAttribute("data-capa");
+        console.log("" + Newdungluong);
+
+        // Remove the border from the previously selected element, if any
+        if (previousElement_capa) {
+            previousElement_capa.style.border = "none";
+        }
+
+        // Add a border to the clicked element
+        this.style.border = "1.5px solid #6DA9E4";
+
+        // Store a reference to the clicked element as the new previous element
+        previousElement_capa = this;
+        GetNewPhone(mau, Newdungluong, seri);
+    }
+    function GetNewPhone(mau, dungluong, seri) {
+        var masp = mau + dungluong + seri;
+        $.ajax({
+            type: "POST",
+            url: "/DetailsProduct/GetMaSP",
+            data: { masp: masp },
+            success: function (response) {
+                var masp = response.id;
+                location.href = "/DetailsProduct/Details/" + masp;
+            }
+        });
+    }
+</script>
+

@@ -1,0 +1,69 @@
+﻿﻿@model BanDienThoaiDiDong.Models.HDBAN
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/QLDonHang/Views/Shared/_LayoutPage1.cshtml";
+    
+}
+<link rel="stylesheet" href="~/Content/DetailsStyle.css" />
+<div style="margin-top: 70px;" id="main" class="content">
+    <h2 style="text-align: center">HỦY ĐƠN HÀNG</h2>
+    <br />
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8" style="margin: 0px auto;">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="table table-borderless">
+                                <div>
+                                    <hr />
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            Họ và tên khách hàng
+                                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.KHACHHANG.HoTen)
+                                        </dd>
+
+                                        <dt>
+                                            Ngày đặt hàng
+                                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.NgayDatHang)
+                                        </dd>
+
+                                        <dt>
+                                            Địa chỉ giao hàng
+                                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.DiaChiGiaoHang)
+                                        </dd>
+
+                                        <dt>
+                                            Trạng thái đơn hàng
+                                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.TrangThaiDH)
+                                        </dd>
+                                    </dl>
+
+                                    @using (Html.BeginForm())
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(model => model.MaHD)
+                                        <div class="form-actions no-color">
+                                            <input type="submit" value="XÓA" class="btn btn-danger" /> |
+                                            @Html.ActionLink("TRỞ LẠI", "DSDonHang")
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,129 @@
+﻿@using PagedList.Mvc
+@using BanDienThoaiDiDong.Models
+@model PagedList.PagedList<BanDienThoaiDiDong.Models.SANPHAM>
+@{
+    ViewBag.Title = "SanPhamTheoThuongHieu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/jsSlide.js"></script>
+<script src="~/Content/js.js"></script>
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link href="~/Content/dssp.css" rel="stylesheet" />
+<div style="background: gainsboro;">
+    <section>
+        <img class="logo" src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/Category/42/WiPhone-120x35.png" alt="">
+
+        <div class="slider">
+            <i class="fas fa-arrow-left left slider-prev"></i>
+            <div class="slider-wrapper">
+                <div class="slider-main">
+                    <div class="slider-item">
+                        <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1170x300/https://cdn.tgdd.vn/2023/03/banner/wo-top-2400-600-1920x480-1.png" alt="">
+                    </div>
+                    <div class="slider-item">
+                        <img src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100,s_1170x300/https://cdn.tgdd.vn/2023/03/banner/ip11-2400-600-1920x480.png" alt="">
+                    </div>
+
+                </div>
+            </div>
+            <i class="fas fa-arrow-right right slider-next"></i>
+
+        </div>
+        <div>
+            <p>
+
+            </p>
+        </div>
+
+        <div class="filter-cate">
+            <div class="ft-cate">
+
+            </div>
+            <div>
+                @using (Html.BeginForm())
+                {
+                    <p>
+
+                    </p>
+                    <div class="form-group form-inline" style="display: inline-flex; text-align: right;">
+                        @Html.TextBox("SearchString", "", new { @class = "form-control" })
+                        <input type="submit" class="btn btn-warning" value="Search" />
+                    </div>
+                }
+                <div>
+                    <p>
+
+                    </p>
+                </div>
+                Sắp xếp:
+                <!-- Đoạn cần thêm -->
+                Sắp xếp:
+                @using (Html.BeginForm("Index", "DanhSachSP", FormMethod.Post, new { id = "myForm" }))
+                {
+
+                    @Html.DropDownList("sortOrder", new List<SelectListItem>
+                                    {
+                            new SelectListItem { Text = "Theo tên A - Z", Value = "" },
+                            new SelectListItem { Text = "Theo tên Z - A", Value = "ma_desc" },
+                            new SelectListItem { Text = "Giá tăng dần", Value = "price" },
+                            new SelectListItem { Text = "Giá giảm dần", Value = "price_desc" }
+                        }, new { onchange = "submitForm();" })
+
+                }
+                <!-- Kết thúc -->
+            </div>
+        </div>
+        <div>
+            <p>
+
+            </p>
+        </div>
+        <div class="listing-cate">
+            @foreach (var item in Model)
+            {
+                <div class="listing-cate-item" style="background: white;">
+                    <a href="">
+                        <label for="">Mới</label>
+                        <div class="item-img">
+                            <a href="@Url.Action("Index","DetailProduct",new {id = item.MaSP})">
+                                <img src="~/Images/@item.Hinh" alt="">
+                            </a>
+
+                        </div>
+                        <div class="prods-group">
+
+                        </div>
+                        <h3 style="color: black">@item.TenSP</h3>
+                        <p style="color: black">
+                            @{
+                                double price = (double)item.Gia;
+                            }
+                            @price.ToString("N0") VND
+                        </p>
+
+                    </a>
+                </div>
+            }
+
+        </div>
+        <br />
+
+        <div class="MenuTrang">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        </div>
+        <style>
+            .MenuTrang li {
+                display: inline;
+            }
+        </style>
+    </section>
+</div>
+<script>
+    function submitForm() {
+        document.getElementById("myForm").submit();
+    }
+</script>
+ 
+
+

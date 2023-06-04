@@ -1,0 +1,76 @@
+﻿﻿@model IEnumerable<BanDienThoaiDiDong.Models.CHITIETHDBAN>
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/QLDonHang/Views/Shared/_LayoutPage1.cshtml";
+
+}
+<link rel="stylesheet" href="~/Content/DetailsStyle.css" />
+<div id="main" class="content" style="margin-top: 70px;">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8" style="margin: 0px auto;">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="mb-3 d-flex justify-content-between">
+                                <div>
+                                    <span class="badge rounded-pill bg-info">CHI TIẾT ĐƠN HÀNG</span>
+                                    <span class="me-3">Mã đơn hàng @ViewBag.mahd</span>
+                                    <span class="me-3">@ViewBag.ngaytao</span>
+                                </div>
+                            </div>
+                            <table class="table table-borderless">
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex mb-2">
+                                                    <div class="flex-shrink-0">
+                                                        <img src="/Images/@item.SANPHAM.Hinh" width="100" height="100" class="img-fluid" />
+                                                    </div>
+                                                    <div class="flex-lg-grow-1 ms-3">
+                                                        <h6 class="small mb-0"><a href="#" class="text-reset" style="font-size: 20px">@item.SANPHAM.TenSP</a></h6>
+                                                        <span class="small">Màu: @item.GetMau(item.SANPHAM.MaSP) </span><br />
+                                                        <span class="small">Dung lượng: @item.GetDungLuong(item.SANPHAM.MaSP) </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Số lượng: @item.SoLuongDatHang</td>
+                                            <td class="text-end"> @string.Format("{0:#,##0} VNĐ", item.DonGia)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr class="fw-bold">
+                                        <td colspan="2">
+                                            <p>TOTAL <span class="badge bg-success rounded-pill">PAID</span> @string.Format("{0:#,##0} VNĐ", ViewBag.tien) </p>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h3 class="h6" style="text-align:center">ĐỊA CHỈ ĐƠN HÀNG</h3>
+                                    <address>
+                                        <strong>@ViewBag.hoten</strong><br />
+                                        @ViewBag.diachi <br />
+                                        @ViewBag.dienthoai <br />
+                                        @ViewBag.trangthaidh
+                                    </address>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

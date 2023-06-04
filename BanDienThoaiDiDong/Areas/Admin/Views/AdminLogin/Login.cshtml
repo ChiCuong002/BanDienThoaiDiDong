@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Simple Login Form</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="~/Content/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/structure.css">
+</head>
+<body>
+    <form class="box login" action="/Admin/AdminLogin/DoLogin" method="post">
+        <fieldset class="boxBody">
+            <label>Username</label>
+            <input name="userName" type="text" tabindex="1" placeholder="Username" required>
+            <label>Password</label>
+            <input name="passWord" type="password" tabindex="2" placeholder="Password" required>
+        </fieldset>
+        <footer>
+            <lable><input type="checkbox">Ghi nhớ</lable>
+            <input type="submit" class="btnLogin" value="Login" tabindex="4">
+        </footer>
+    </form>
+</body>
+</html>

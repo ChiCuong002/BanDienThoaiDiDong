@@ -1,0 +1,137 @@
+﻿﻿body {
+}
+
+.add-product {
+    border-bottom: .5px solid #64728c;
+    padding: 25px;
+}
+
+h3 {
+    padding: 25px;
+}
+
+span {
+    font-size: inherit;
+}
+
+.add-product > button {
+    color: #fff;
+    background-color: #76BC21;
+    cursor: pointer;
+    font-family: Nunito Sans;
+    font-weight: 500;
+    border: 0;
+    border-radius: 3em;
+    display: inline-block;
+    line-height: 1;
+    padding-right: 32px;
+    padding-left: 32px;
+    min-width: 100px;
+    font-size: 14px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: center;
+}
+
+    .add-product > button:hover {
+        background-color: #84d225;
+    }
+
+.tb-order {
+    background-color: #e8eaef;
+    padding: 0.5rem;
+    font-family: Nunito Sans;
+    font-size: 0.85rem;
+}
+
+.tb-order-item {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    border-radius: 1.2rem;
+    min-height: 45px;
+    align-items: center;
+    font-weight: 400px;
+    padding: 10px;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+}
+
+    .tb-order-item > div {
+        min-width: 10%;
+    }
+
+    .tb-order-item:hover {
+        background-color: rgba(37, 21, 21, 0.1);
+    }
+
+.tb-order-acition i {
+    display: inline-block;
+    color: #64728c;
+    background-color: rgba(37, 21, 21, 0.2);
+    border-radius: 50%;
+    padding: 3px;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-right: 5px;
+}
+
+    .tb-order-acition i:hover {
+        background-color: rgba(37, 21, 21, 0.3);
+    }
+
+.tb-order-madh {
+    flex: 1;
+    text-align: center;
+}
+
+.tb-order-stt {
+    text-align: center;
+    flex: 1;
+}
+
+
+
+.header {
+    background-color: transparent;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.tb-order-tenkh {
+    flex: 1;
+    text-align: center;
+}
+
+.tb-order-sdt {
+    flex: 1;
+    text-align: center;
+}
+
+.tb-order-tien {
+    flex: 1;
+    text-align: center;
+}
+
+.tb-order-thanhtoan {
+    flex: 1;
+    text-align: center;
+}
+
+.tb-order-ngaytao {
+    flex: 1;
+    text-align: center;
+}
+
+.tb-order-trangthai {
+    flex: 1;
+    text-align: center;
+}
+
+.tb-order-acition {
+    flex: 1;
+    text-align: center;
+}
